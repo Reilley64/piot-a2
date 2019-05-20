@@ -4,10 +4,8 @@ import time
 from datetime import date
 
 class dbconnection:
-    def __init__(self, method, sql):
+    def __init__(self):
         self.pymysql = pymysql
-        self.method = method
-        self.sql = sql
 
     def connect(self):
         return self.pymysql.connect(user='root',
@@ -17,21 +15,21 @@ class dbconnection:
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor)
 
-    def cloudConnection(self):
+    def cloudConnection(self, method, sql):
         connection = self.connect()
-        if('GET' == self.method):
+        if('GET' == method):
             try:
                 with connection.cursor() as cursor:
-                    cursor.execute(self.sql)
+                    cursor.execute(sql)
                     result = cursor.fetchall()
                     return result
             finally:
                 connection.close()
-        elif('POST' ==self.method):
+        elif('POST' == method):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(sql)
-                    connection.commit
+                    connection.commit()
             finally:
                 connection.close()
         else:
