@@ -1,22 +1,26 @@
 import socket
+import json
+
 
 class Socket:
     def __init__(self):
         self.address = ("101.116.1.55", 65000)
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    def receiveMessage(self):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind(self.address)
-            s.listen()
-            conn = s.accept()
-            with conn:
-                message = conn.recv(4096)
-                message = message.decode()
-                return message
+    def connect(self):
+        self.s.connect(self.address)
 
     def sendMessage(self, message):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect(self.address)
-            s.sendall(message.encode())
-            data = s.recv(4096)
-            return data;
+        self.s.sendall(message.encode())
+
+        while True:
+            data = self.s.recv(4096)
+            if data:
+                decode = data.decode()
+                decode = json.loads(decode)
+                if decode["response"] == "200":
+                    if "search" in decode:
+                        return decode
+                    return True
+            else:
+                return True
