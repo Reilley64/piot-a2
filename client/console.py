@@ -1,58 +1,56 @@
-from lib.database import database
+from classlib import database
+from classlib import socket
 from pprint import pprint
 
 
 def main():
-    database = Database()
+    users = database.Database()
+    host = socket.Socket()
     username = None
 
     while True:
         while True:
-            input = input()
-            input = input.split()
+            userInput = input("")
+            userInput = userInput.split()
 
-            if input[0] is "login":
-                if len(input) is not 3:
+            if userInput[0] == "login":
+                if len(userInput) is not 3:
                     print("Command login takes 2 arguments")
                 elif username is None:
-                    result = database.login(input[1], input[2])
+                    result = users.login(userInput[1], userInput[2])
                     if not result:
                         print("Username or password wrong")
                     else:
-                        result = result.split()
-                        if len(result) > 1:
-                            print("Error logging in: ")
-                            pprint(result)
-                        else:
-                            username = result
-                            print("Welcome " + username)
+                        username = result
+                        print("Welcome " + str(username))
                 else:
                     print(username + " is already logged in")
-
-            if input[0] is "signup":
-                if len(input) is not 6:
+            elif userInput[0] == "signup":
+                if len(userInput) is not 6:
                     print("Command signup takes 5 arguments")
                 else:
-                    result = database.create(input[1], input[2], input[3], input[4])
+                    result = users.createUser(userInput[1], userInput[2], userInput[3], userInput[4], userInput[5])
                     if not result:
                         print("Error creating account: " + result)
                     else:
                         print("Account created")
-
-            if input[0] == "connect":
-                if len(input) > 1:
+            elif userInput[0] == "connect":
+                if len(userInput) > 1:
                     print("Too many arguments for command connect")
                 elif username is not None:
-                    # TODO: Send username to master pi
+                    name = users.getName(username)
+                    print("Connecting...")
+                    host.sendMessage(username + ", " + name)
                     break
                 else:
                     print("You must login first")
+            else:
+                print("That command doesn't exist")
 
-        # while True:
-        #     # TODO: Wait for logout message
-        #     if (logout):
-        #         username = None;
-        #         break;
+        while True:
+            message = host.receieveMessage()
+            if message == "logout":
+                break;
 
 
 if __name__ == "__main__":
