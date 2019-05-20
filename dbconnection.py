@@ -3,9 +3,11 @@ import pymysql
 import time
 from datetime import date
 
-class connection:
-    def __init__(self):
+class dbconnection:
+    def __init__(self, method, sql):
         self.pymysql = pymysql
+        self.method = method
+        self.sql = sql
 
     def connect(self):
         return self.pymysql.connect(user='root',
@@ -15,26 +17,26 @@ class connection:
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor)
 
-    def cloudConnection(self, method, sql):
+    def cloudConnection(self):
         connection = self.connect()
-        if(method == 'GET'):
+        if('GET' == self.method):
             try:
                 with connection.cursor() as cursor:
-                    cursor.execute(sql)
+                    cursor.execute(self.sql)
                     result = cursor.fetchall()
+                    return result
             finally:
-                connection.close
-                return result
-        elif(method =='POST'):
+                connection.close()
+        elif('POST' ==self.method):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(sql)
                     connection.commit
             finally:
                 connection.close()
-                return 'true'
         else:
             connection.close()
             return 'false'
+
 
     
