@@ -15,47 +15,51 @@ def create_user(user, name):
     result = dbconnection.cloudConnection('POST', sql)
     return result
 
-def borrow_book(user, name, bookTitle):
+def book_unavailable(bookID):
+    sql = "select * from bookBorrowed where bookID = {} AND status = \'BORROWED\'".format(bookID)
+    db = dbconnection.dbconnection('GET', sql)
+    result = db.cloudConnection()
+    for r in result:
+        if(r['status'] == None or r['status'] == 'RETURNED'):
+            return False
+        else:
+            return True
+
+def borrow_book(user, name, bookID):
     ## get user
     if (check_if_user_doesnt_exist(user)):
         create_user(user, name)
     sql = "SELECT id FROM lmsUser WHERE username = '{}'".format(user)
     userID = dbconnection.cloudConnection('GET', sql)
-    ## get book
-    sql2 = "SELECT id FROM book WHERE title = {}".format(bookTitle)
-    bookID = dbconnection.cloudConnection('GET', sql2)
+
+    if(book_unavailable(bookID)):
+        return {"response": "400", "error": "book unavailable"}
 
     ## update book table
     sql3 = "INSERT INTO bookBorrowed (lmsUserID, bookID, status, borrowDate, returnDate) VALUES ({}, {}, 'BORROWED', NOW(), null)".format(userID,bookID)
     db3 = dbconnection.dbconnection('POST', sql3)
     result = db3.cloudConnection()
+    return {"response": "200"}
 
-def return_book(bookTitle):
-    ## get book
-    sql1 = "SELECT id FROM book WHERE title = {}".format(bookTitle)
-    db1 = dbconnection.dbconnection('GET', sql1)
-    bookID = db1.cloudConnection()
-    ## update book
-    sql2 = "UPDATE bookBorrowed SET status = \'RETURNED\', returnDate = NOW() WHERE bookID = {} and ".format(bookID)
-    db2 = dbconnection.dbconnection('POST', sql2)
-    result = db2.cloudConnection()
+def return_book(bookID):
+    sql = "UPDATE bookBorrowed SET status = \'RETURNED\', returnDate = NOW() WHERE bookID = {} and ".format(bookID)
+    db = dbconnection.dbconnection('POST', sql)
+    result = db.cloudConnection()
+    return {"response": "200"}
 
 def search_book(column, query):
-    sql = "SELECT * FROM book WHERE {} LIKE \'%{}%\'".format(column, query)
+    sql = "SELECT  book.bookID, book.title, book.author, book.publishedDate, borrowed.status FROM book INNER JOIN ( SELECT bookID, status FROM bookBorrowed WHERE status=\'BORROWED\') AS borrowed ON book.bookID = borrowed.bookIDWHERE book.{} LIKE \'%{}%\'".format(column, query)
     print (sql)
     db = dbconnection.dbconnection('GET', sql)
     result = db.cloudConnection()
     print(result)
     formatted = []
     for r in result:
-        formatted.append({'title':r['title'],'author':r['author'],'publishedDate':r['publishedDate'].strftime('%Y-%m-%d')})
+        if(r['status'] == None):
+            formatted.append({'title':r['title'],'author':r['author'],'publishedDate':r['publishedDate'].strftime('%Y-%m-%d'), 'status': 'AVAILABLE'})
+        else:
+            formatted.append({'title':r['title'],'author':r['author'],'publishedDate':r['publishedDate'].strftime('%Y-%m-%d'), 'status': r['status']})
     return formatted
-
-def logout():
-    ## send socket back to RP
-    return True
-
-
 
 HOST = ""    # Empty string means to listen on all IP's on the machine, also works with IPv6.
              # Note "0.0.0.0" also works but only with IPv4.
