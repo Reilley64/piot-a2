@@ -50,6 +50,7 @@ def main():
         while True:
             message = host.receieveMessage()
             if message == "logout":
+                print("Logging out...")
                 break;
 
 
