@@ -11,25 +11,13 @@ class Database:
             logging.basicConfig(filename="db.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s")
             logging.warning(e)
 
-    def login(self, username, password):
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute("SELECT * FROM users WHERE username='" + username + "';")
-            rows = cursor.fetchall()
-        except sqlite3.Error as e:
-            return e
-
-        if pbkdf2_sha256.verify(password, rows[0][2]):
-            return rows[0][1]
-        else:
-            return False
-
     def createUser(self, username, password, firstName, lastName, email):
         passwordHash = pbkdf2_sha256.hash(password)
 
         try:
             cursor = self.connection.cursor()
-            cursor.execute("INSERT INTO users (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?);", (username, passwordHash, firstName, lastName, email))
+            cursor.execute("INSERT INTO users (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?);",
+                           (username, passwordHash, firstName, lastName, email))
         except sqlite3.Error as e:
             return e
 
@@ -39,10 +27,22 @@ class Database:
     def getName(self, username):
         try:
             cursor = self.connection.cursor()
-            cursor.execute("SELECT firstName FROM users WHERE username='" + username + "';")
-            rows = cursor.fetchall()
+            cursor.execute("SELECT firstName FROM users WHERE username=?;", (username,))
+            rows = cursor.fetchone()
         except sqlite3.Error as e:
             return e
 
-        return rows[0][0]
+        return rows[0]
 
+    def login(self, username, password):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT username, password FROM users WHERE username=?;", (username,))
+            rows = cursor.fetchone()
+        except sqlite3.Error as e:
+            return e
+
+        if pbkdf2_sha256.verify(password, rows[1]):
+            return rows[0]
+        else:
+            return False
