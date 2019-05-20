@@ -8,14 +8,14 @@ class connection:
         self.pymysql = pymysql
 
     def connect(self):
-        return self.pymysql.connect(user='',
+        return self.pymysql.connect(user='root',
             password='',
-            host='',
-            db='',
+            host='35.201.1.71',
+            db='librarylms',
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor)
 
-    def cloudconnection(self, method, sql):
+    def cloudConnection(self, method, sql):
         connection = self.connect()
         if(method == 'GET'):
             try:
