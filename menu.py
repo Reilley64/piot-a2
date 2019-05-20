@@ -15,10 +15,9 @@ def print_search():
     print ("3. Date")
     print ("4. Back")
     print (67 * "-")
-        
 
 def check_if_user_doesnt_exist(user):
-    sql = "SELECT * FROM lmsUser WHERE username = '{}'".format(column, query)
+    sql = "SELECT * FROM lmsUser WHERE username = '{}'".format(user)
     result = dbconnection.cloudConnection('GET', sql)
     if(result.length == 1):
         return True
@@ -29,7 +28,6 @@ def create_user(user, name):
     sql = "INSERT INTO lmsUser (username, name) VALUES ('{}', '{}')".format(user, name)
     result = dbconnection.cloudConnection('POST', sql)
     return result
-
 
 def borrow_book(user, name, bookTitle):
     ## get user
@@ -50,7 +48,7 @@ def return_book(bookTitle):
     ## get book
     sql1 = "SELECT id FROM book WHERE title = {}".format(bookTitle)
     db1 = dbconnection.dbconnection('GET', sql1)
-    result = db1.cloudConnection()
+    bookID = db1.cloudConnection()
     ## update book
     sql2 = "UPDATE bookBorrowed SET status = \'RETURNED\', returnDate = NOW() WHERE bookID = {} and ".format(bookID)
     db2 = dbconnection.dbconnection('POST', sql2)
@@ -67,8 +65,7 @@ def search_book(column, query):
 def logout():
     ## send socket back to RP
     return True
-    
-  
+ 
 while True:
     print_menu()
     choice = input("Enter your choice [1-4]: ")
@@ -94,7 +91,7 @@ while True:
                 break
                 print ("back selected")
             else:
-                raw_input("Wrong option selection. Enter any key to try again..")
+                print("Wrong option selection.")
     elif choice=='2':
         print ("borrow book has been selected")
     elif choice=='3':
