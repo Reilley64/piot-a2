@@ -1,20 +1,6 @@
 import dbconnection as dbconnection
-
-def print_menu():
-    print (30 * "-" , "MENU" , 30 * "-")
-    print ("1. Seach Book catalogue")
-    print ("2. Borrow")
-    print ("3. Return")
-    print ("4. Logout")
-    print (67 * "-")
-
-def print_search():
-    print (30 * "-" , "Search By" , 30 * "-")
-    print ("1. Title")
-    print ("2. Author")
-    print ("3. Date")
-    print ("4. Back")
-    print (67 * "-")
+import socket
+import json
 
 def check_if_user_doesnt_exist(user):
     sql = "SELECT * FROM lmsUser WHERE username = '{}'".format(user)
@@ -60,44 +46,61 @@ def search_book(column, query):
     db = dbconnection.dbconnection('GET', sql)
     result = db.cloudConnection()
     print(result)
-    return result
+    formatted = []
+    for r in result:
+        formatted.append({'title':r['title'],'author':r['author'],'publishedDate':r['publishedDate'].strftime('%Y-%m-%d')})
+    return formatted
 
 def logout():
     ## send socket back to RP
     return True
- 
-while True:
-    print_menu()
-    choice = input("Enter your choice [1-4]: ")
-     
-    if choice=='1':     
-        print ("search has been selected")
-        while True:
-            print_search()
-            search = input("Enter your choice [1-4]: ")
-            if search == '1':
-                print ("search by title selected")
-                query = input("Enter your search for title")
-                search_book('title', query)
-            elif search == '2':
-                print ("search by author selected")
-                query = input("Enter your search for author")
-                search_book('author', query)
-            elif search == '3':
-                print ("search by date selected")
-                query = input("Enter your search for date")
-                search_book('date', query)
-            elif search == '4':
-                break
-                print ("back selected")
+
+
+
+HOST = ""    # Empty string means to listen on all IP's on the machine, also works with IPv6.
+             # Note "0.0.0.0" also works but only with IPv4.
+PORT = 65000 # Port to listen on (non-privileged ports are > 1023).
+ADDRESS = (HOST, PORT)
+user = ""
+name = ""
+response = ""
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind(ADDRESS)
+    s.listen()
+
+    print("Listening on {}...".format(ADDRESS))
+    conn, addr = s.accept()
+    with conn:
+        print("Connected to {}".format(addr))
+        connection = True
+        while connection:
+            print("yeet")
+            data = conn.recv(4096)
+            if(data):
+                jsondata = json.loads(data.decode())
+                print("Received {} bytes of data decoded to: '{}'".format(
+                    len(data), data.decode()))
+                jsondata = json.loads(data.decode())
+                if(jsondata["request"] == 'credentials'):
+                    user = jsondata["username"]
+                    name = jsondata["name"]
+                    response = {"response": "200"}
+                if(jsondata["request"] == 'logout'):
+                    connection = False
+                    response = {"response": "200"}
+                if(jsondata["request"] == 'search'):
+                    column = jsondata["column"]
+                    query = jsondata["query"]
+                    result = search_book(column, query)
+                    print(result)
+                    response = {"response": "200", "search": result}
+                print("Sending data back.")
+                conn.sendall(json.dumps(response).encode())
             else:
-                print("Wrong option selection.")
-    elif choice=='2':
-        print ("borrow book has been selected")
-    elif choice=='3':
-        print ("return book has been selected")
-    elif choice=='4':
-        print ("logout has been selected")
-        break
-    else:
-        print ("Wrong option selection.")
+                break
+        print("Disconnecting from client.")
+    print("Closing listening socket.")
+print("Done.")
+
+    
