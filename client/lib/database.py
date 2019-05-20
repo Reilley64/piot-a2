@@ -16,12 +16,12 @@ class Database:
             self.conn.cursor.execute("SELECT * FROM users WHERE username='" + username + "';")
             rows = self.cunn.cursor.fetchall()
         except sqlite3.Error as e:
-            return e;
+            return e
 
         if pbkdf2_sha256.verify(password, rows[0].password):
-            return rows[0].username;
+            return rows[0].username
         else:
-            return False;
+            return False
 
     def createUser(self, username, password, firstName, lastName, email):
         passwordHash = pbkdf2_sha256.hash(password)
@@ -29,6 +29,6 @@ class Database:
         try:
             self.conn.cursor.execute("INSERT INTO users (username, password) VALUES (?, ?);", (username, passwordHash))
         except sqlite3.Error as e:
-            return e;
+            return e
         finally:
-            return True;
+            return True
