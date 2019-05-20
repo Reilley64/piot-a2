@@ -5,11 +5,9 @@ def print_menu():
     print "2. Borrow"
     print "3. Return"
     print "4. Logout"
-    print 67 * "-"
+    print 67 * "-"    
   
-loop=True      
-  
-while loop:
+while true:
     print_menu()
     choice = input("Enter your choice [1-4]: ")
      
@@ -23,6 +21,6 @@ while loop:
         ## You can add your code or functions here
     elif choice==4:
         print "logout has been selected"
-        loop=False 
+        break
     else:
         raw_input("Wrong option selection. Enter any key to try again..")
