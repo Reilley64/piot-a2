@@ -20,7 +20,9 @@ class Socket:
                 decode = json.loads(decode)
                 if decode["response"] == "200":
                     if "search" in decode:
-                        return decode
+                        return decode["search"]
                     return True
+                elif decode["response"] == "400":
+                    return False
             else:
                 return True

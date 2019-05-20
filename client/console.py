@@ -47,7 +47,7 @@ def main():
                 if response:
                     while True:
                         print(30 * "-", "MENU", 30 * "-")
-                        print("1. Search Book catalogue")
+                        print("1. Search Book Catalogue")
                         print("2. Borrow")
                         print("3. Return")
                         print("4. Logout")
@@ -56,12 +56,12 @@ def main():
                         userInput = input("")
 
                         if userInput == "1":
-                            print(30 * "-", "Search By", 30 * "-")
+                            print(30 * "-", "SEARCH", 30 * "-")
                             print("1. Title")
                             print("2. Author")
                             print("3. Date")
                             print("4. Back")
-                            print(66 * "-")
+                            print(65 * "-")
 
                             userInput = input("")
 
@@ -70,22 +70,67 @@ def main():
 
                                 message = json.dumps({"request": "search", "column": "title", "query": userInput})
                                 response = host.sendMessage(message)
-                                print(json.dumps(response))
+
+                                if not response:
+                                    print("Error searching for " + userInput)
+                                    continue
+
+                                for book in response:
+                                    print("Title: " + book["title"] + ", Author: " + book["author"] + ", " + book[
+                                        "publishedDate"] + ", Borrowed: " + book["status"])
 
                             elif userInput == "2":
                                 userInput = input("Insert author: ")
 
-                                message = json.dumps({"request": "search", "column": "title", "query": userInput})
+                                message = json.dumps({"request": "search", "column": "author", "query": userInput})
                                 response = host.sendMessage(message)
+
+                                if not response:
+                                    print("Error searching for " + userInput)
+                                    continue
+
+                                for book in response:
+                                    print("Title: " + book["title"] + ", Author: " + book["author"] + ", " + book[
+                                        "publishedDate"] + ", Borrowed: " + book["status"])
 
                             elif userInput == "3":
-                                userInput = input("Insert author: ")
+                                userInput = input("Insert date: ")
 
-                                message = json.dumps({"request": "search", "column": "title", "query": userInput})
+                                message = json.dumps({"request": "search", "column": "date", "query": userInput})
                                 response = host.sendMessage(message)
+
+                                if not response:
+                                    print("Error searching for " + userInput)
+                                    continue
+
+                                for book in response:
+                                    print("Title: " + book["title"] + ", Author: " + book["author"] + ", " + book[
+                                        "publishedDate"] + ", Borrowed: " + book["status"])
 
                             elif userInput == "4":
                                 continue
+
+                        elif userInput == "2":
+                            userInput = input("Insert id: ")
+
+                            message = json.dumps({"request": "borrow", "id": userInput})
+                            response = host.sendMessage(message)
+
+                            if response:
+                                print("Book borrowed")
+                            else:
+                                print("Error borrowing book")
+
+                        elif userInput == "3":
+                            userInput = input("Insert id: ")
+
+                            message = json.dumps({"request": "return", "id": userInput})
+                            response = host.sendMessage(message)
+
+                            if response:
+                                print("Book returned")
+                            else:
+                                print("Error returning book")
 
                         elif userInput == "4":
                             response = host.sendMessage(None)
