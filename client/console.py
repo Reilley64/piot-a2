@@ -1,12 +1,5 @@
-from classlib import database
-from classlib import socket
+from classlib import *
 import json
-
-
-def printBook(book):
-    print("ID: %-3s Title: %-50s Author: %-25s Published: %-10s Status: %-9s" % (
-        book["id"], book["title"], book["author"], book["publishedDate"],
-        book["status"]))
 
 
 def main():
@@ -84,7 +77,9 @@ def main():
                                     continue
 
                                 for book in response:
-                                    printBook(book)
+                                    printBook = book.Book(book["id"], book["title"], book["author"],
+                                                          book["publishedDate"], book["status"])
+                                    print(printBook)
 
                             elif userInput == "2":
                                 userInput = input("Insert author: ")
@@ -97,7 +92,9 @@ def main():
                                     continue
 
                                 for book in response:
-                                    printBook(book)
+                                    printBook = book.Book(book["id"], book["title"], book["author"],
+                                                          book["publishedDate"], book["status"])
+                                    print(printBook)
 
                             elif userInput == "3":
                                 userInput = input("Insert date: ")
@@ -110,7 +107,9 @@ def main():
                                     continue
 
                                 for book in response:
-                                    printBook(book)
+                                    printBook = book.Book(book["id"], book["title"], book["author"],
+                                                          book["publishedDate"], book["status"])
+                                    print(printBook)
 
                             elif userInput == "4":
                                 continue
