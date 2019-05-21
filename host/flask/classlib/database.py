@@ -18,4 +18,9 @@ class Database():
         cursor = self.connection.cursor()
         cursor.execute("INSERT INTO book (title, author, publishedDate) VALUES (%s, %s, %s)",
                        (title, author, publishedDate))
-        self.connection.commit
+        self.connection.commit()
+
+    def removeBook(self, id):
+        cursor = self.connection.cursor()
+        cursor.execute("DELETE FROM book WHERE bookID=%s", (id,))
+        self.connection.commit()
