@@ -27,7 +27,7 @@ class Request:
         self.username = username
         self.name = name
 
-    def send(self):
+    def __str__(self):
         if self.request is None:
             return False;
 
@@ -36,7 +36,7 @@ class Request:
             return returnable
 
         elif self.request == "search":
-            returnable = json.dumps({"request": self.request, "search": self.column, "query": self.query})
+            returnable = json.dumps({"request": self.request, "column": self.column, "query": self.query})
             return returnable
 
         elif self.request == "borrow":

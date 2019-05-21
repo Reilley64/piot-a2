@@ -1,3 +1,5 @@
+import os
+
 from classlib.database import Database
 from classlib.request import Request
 from classlib.socket import Socket
@@ -7,8 +9,10 @@ from tabulate import tabulate
 def printSearchResponse(response):
     responseTable = []
     for book in response:
-        responseTable.append([book["id"], book["title"], book["author"], book["publishedDate"], book["status"]])
-    print(tabulate(responseTable, headers=["ID", "Title", "Author", "Published", "Status"]))
+        responseTable.append([book["bookID"], book["title"], book["author"], book["publishedDate"], book["status"]])
+
+    os.system("clear")
+    print(tabulate(responseTable, headers=["ID", "Title", "Author", "Published", "Status"]) + "\n")
 
 
 def main():
@@ -17,7 +21,7 @@ def main():
     username = None
 
     while True:
-        print("login | logout | signup | connect | exit | help")
+        print("login | face | logout | signup | connect | exit | help")
 
         userInput = input("")
         userInput = userInput.split()
@@ -34,6 +38,10 @@ def main():
                     print("Welcome " + str(username) + "\n")
             else:
                 print(username + " is already logged in \n")
+
+        elif userInput[0] == "face":
+            if len(userInput) > 1:
+                print("Too many arguments for command logout; example \"face\"\n")
 
         elif userInput[0] == "logout":
             if len(userInput) > 1:
@@ -60,12 +68,12 @@ def main():
                 print("Too many arguments for command connect; example \"connect\"\n")
             elif username is not None:
                 name = users.getName(username)
-                print("Connecting...")
+                print("Connecting...\n")
                 host.connect()
 
                 sendable = Request()
                 sendable.credentials(username, name)
-                response = host.sendRequest(sendable.send)
+                response = host.sendRequest(str(sendable))
 
                 if response:
                     while True:
@@ -93,10 +101,10 @@ def main():
 
                                 sendable = Request()
                                 sendable.bookSearch("title", userInput)
-                                response = host.sendRequest(sendable.send)
+                                response = host.sendRequest(str(sendable))
 
                                 if not response:
-                                    print("Error searching for " + userInput)
+                                    print("Error searching for " + userInput + "\n")
                                     continue
 
                                 printSearchResponse(response)
@@ -106,10 +114,10 @@ def main():
 
                                 sendable = Request()
                                 sendable.bookSearch("author", userInput)
-                                response = host.sendRequest(sendable.send)
+                                response = host.sendRequest(str(sendable))
 
                                 if not response:
-                                    print("Error searching for " + userInput)
+                                    print("Error searching for " + userInput + "\n")
                                     continue
 
                                 printSearchResponse(response)
@@ -119,10 +127,10 @@ def main():
 
                                 sendable = Request()
                                 sendable.bookSearch("date", userInput)
-                                response = host.sendRequest(sendable.send)
+                                response = host.sendRequest(str(sendable))
 
                                 if not response:
-                                    print("Error searching for " + userInput)
+                                    print("Error searching for " + userInput + "\n")
                                     continue
 
                                 printSearchResponse(response)
@@ -135,31 +143,31 @@ def main():
 
                             sendable = Request()
                             sendable.bookBorrow(userInput)
-                            response = host.sendRequest(sendable.send)
+                            response = host.sendRequest(str(sendable))
 
                             if type(response) is str:
-                                print("Error borrowing book: " + response)
+                                print("Error borrowing book: " + response + "\n")
                             elif response:
-                                print("Book borrowed")
+                                print("Book borrowed\n")
 
                         elif userInput == "3":
                             userInput = input("Insert id: ")
 
                             sendable = Request()
                             sendable.bookReturn(userInput)
-                            response = host.sendRequest(sendable.send)
+                            response = host.sendRequest(str(sendable))
 
                             if type(response) is str:
-                                print("Error returning book: " + response)
+                                print("Error returning book: " + response + "\n")
                             elif response:
-                                print("Book returned")
+                                print("Book returned\n")
 
                         elif userInput == "4":
                             response = host.sendRequest(None)
                             if response:
                                 break
                 else:
-                    print("Connection failure")
+                    print("Connection failure\n")
             else:
                 print("You must login first \n")
 
