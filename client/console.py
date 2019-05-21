@@ -3,6 +3,12 @@ from classlib import socket
 import json
 
 
+def printBook(book):
+    print("ID: %-3s Title: %-50s Author: %-25s Published: %-10s Status: %-9s" % (
+        book["id"], book["title"], book["author"], book["publishedDate"],
+        book["status"]))
+
+
 def main():
     users = database.Database()
     host = socket.Socket()
@@ -78,9 +84,7 @@ def main():
                                     continue
 
                                 for book in response:
-                                    print("ID: %-3s Title: %-50s Author: %-25s Published: %-10s Status: %-9s" % (
-                                        book["id"], book["title"], book["author"], book["publishedDate"],
-                                        book["status"]))
+                                    printBook(book)
 
                             elif userInput == "2":
                                 userInput = input("Insert author: ")
@@ -93,9 +97,7 @@ def main():
                                     continue
 
                                 for book in response:
-                                    print("ID: %-3s Title: %-50s Author: %-25s Published: %-10s Status: %-9s" % (
-                                        book["id"], book["title"], book["author"], book["publishedDate"],
-                                        book["status"]))
+                                    printBook(book)
 
                             elif userInput == "3":
                                 userInput = input("Insert date: ")
@@ -108,9 +110,7 @@ def main():
                                     continue
 
                                 for book in response:
-                                    print("ID: %-3s Title: %-50s Author: %-25s Published: %-10s Status: %-9s" % (
-                                        book["id"], book["title"], book["author"], book["publishedDate"],
-                                        book["status"]))
+                                    printBook(book)
 
                             elif userInput == "4":
                                 continue
@@ -125,7 +125,6 @@ def main():
                                 print("Error borrowing book: " + response)
                             elif response:
                                 print("Book borrowed")
-
 
                         elif userInput == "3":
                             userInput = input("Insert id: ")
