@@ -42,6 +42,9 @@ class Database:
         except sqlite3.Error as e:
             return e
 
+        if not rows:
+            return False
+
         if pbkdf2_sha256.verify(password, rows[1]):
             return rows[0]
         else:

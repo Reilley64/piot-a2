@@ -1,13 +1,24 @@
-from classlib import *
-import json
+from classlib.database import Database
+from classlib.request import Request
+from classlib.socket import Socket
+from tabulate import tabulate
+
+
+def printSearchResponse(response):
+    responseTable = []
+    for book in response:
+        responseTable.append([book["id"], book["title"], book["author"], book["publishedDate"], book["status"]])
+    print(tabulate(responseTable, headers=["ID", "Title", "Author", "Published", "Status"]))
 
 
 def main():
-    users = database.Database()
-    host = socket.Socket()
+    users = Database()
+    host = Socket()
     username = None
 
     while True:
+        print("login | logout | signup | connect | exit")
+
         userInput = input("")
         userInput = userInput.split()
 
@@ -23,6 +34,15 @@ def main():
                     print("Welcome " + str(username))
             else:
                 print(username + " is already logged in")
+
+        elif userInput[0] == "logout":
+            if len(userInput) > 1:
+                print("Too many arguments for command connect")
+            elif username is not None:
+                username = None
+                print("Logged out")
+            else:
+                print("No one to logout")
 
         elif userInput[0] == "signup":
             if len(userInput) is not 6:
@@ -42,8 +62,9 @@ def main():
                 print("Connecting...")
                 host.connect()
 
-                message = json.dumps({"request": "credentials", "username": username, "name": name})
-                response = host.sendMessage(message)
+                sendable = Request()
+                sendable.credentials(username, name)
+                response = host.sendRequest(sendable.send)
 
                 if response:
                     while True:
@@ -69,47 +90,41 @@ def main():
                             if userInput == "1":
                                 userInput = input("Insert title: ")
 
-                                message = json.dumps({"request": "search", "column": "title", "query": userInput})
-                                response = host.sendMessage(message)
+                                sendable = Request()
+                                sendable.bookSearch("title", userInput)
+                                response = host.sendRequest(sendable.send)
 
                                 if not response:
                                     print("Error searching for " + userInput)
                                     continue
 
-                                for book in response:
-                                    printBook = book.Book(book["id"], book["title"], book["author"],
-                                                          book["publishedDate"], book["status"])
-                                    print(printBook)
+                                printSearchResponse(response)
 
                             elif userInput == "2":
                                 userInput = input("Insert author: ")
 
-                                message = json.dumps({"request": "search", "column": "author", "query": userInput})
-                                response = host.sendMessage(message)
+                                sendable = Request()
+                                sendable.bookSearch("author", userInput)
+                                response = host.sendRequest(sendable.send)
 
                                 if not response:
                                     print("Error searching for " + userInput)
                                     continue
 
-                                for book in response:
-                                    printBook = book.Book(book["id"], book["title"], book["author"],
-                                                          book["publishedDate"], book["status"])
-                                    print(printBook)
+                                printSearchResponse(response)
 
                             elif userInput == "3":
                                 userInput = input("Insert date: ")
 
-                                message = json.dumps({"request": "search", "column": "date", "query": userInput})
-                                response = host.sendMessage(message)
+                                sendable = Request()
+                                sendable.bookSearch("date", userInput)
+                                response = host.sendRequest(sendable.send)
 
                                 if not response:
                                     print("Error searching for " + userInput)
                                     continue
 
-                                for book in response:
-                                    printBook = book.Book(book["id"], book["title"], book["author"],
-                                                          book["publishedDate"], book["status"])
-                                    print(printBook)
+                                printSearchResponse(response)
 
                             elif userInput == "4":
                                 continue
@@ -117,8 +132,9 @@ def main():
                         elif userInput == "2":
                             userInput = input("Insert id: ")
 
-                            message = json.dumps({"request": "borrow", "id": userInput})
-                            response = host.sendMessage(message)
+                            sendable = Request()
+                            sendable.bookBorrow(userInput)
+                            response = host.sendRequest(sendable.send)
 
                             if type(response) is str:
                                 print("Error borrowing book: " + response)
@@ -128,8 +144,9 @@ def main():
                         elif userInput == "3":
                             userInput = input("Insert id: ")
 
-                            message = json.dumps({"request": "return", "id": userInput})
-                            response = host.sendMessage(message)
+                            sendable = Request()
+                            sendable.bookReturn(userInput)
+                            response = host.sendRequest(sendable.send)
 
                             if type(response) is str:
                                 print("Error returning book: " + response)
@@ -137,13 +154,17 @@ def main():
                                 print("Book returned")
 
                         elif userInput == "4":
-                            response = host.sendMessage(None)
+                            response = host.sendRequest(None)
                             if response:
                                 break
                 else:
                     print("Connection failure")
             else:
                 print("You must login first")
+
+        elif userInput[0] == "exit":
+            break
+
         else:
             print("That command doesn't exist")
 

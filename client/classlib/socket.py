@@ -10,8 +10,8 @@ class Socket:
     def connect(self):
         self.s.connect(self.address)
 
-    def sendMessage(self, message):
-        self.s.sendall(message.encode())
+    def sendRequest(self, request):
+        self.s.sendall(request.encode())
 
         while True:
             data = self.s.recv(4096)
