@@ -1,6 +1,7 @@
 import dbconnection as dbconnection
 import time
 import datetime
+import uuid
 
 class Functions:
     def check_if_user_doesnt_exist(user):
@@ -32,18 +33,22 @@ class Functions:
         sql = "SELECT lmsUserID FROM lmsUser WHERE username = '{}'".format(user)
         db = dbconnection.dbconnection()
         userID = db.cloudConnection('GET', sql)
-        if(book_unavailable(bookID)):
+        if(Functions.book_unavailable(bookID)):
             return {"response": "400", "error": "book unavailable"}
-        sql2 = "INSERT INTO bookBorrowed (lmsUserID, bookID, status, borrowDate, returnDate) VALUES ({}, {}, 'BORROWED', CURDATE(), null)".format(int(userID[0]['lmsUserID']),bookID)
+        key = str(uuid.uuid4()).replace("-","")
+        sql2 = "INSERT INTO bookBorrowed (bookBorrowedID,lmsUserID, bookID, status, borrowDate, returnDate) VALUES ('{}',{}, {}, 'BORROWED', CURDATE(), null)".format(key,int(userID[0]['lmsUserID']),bookID)
         db2 = dbconnection.dbconnection()
         result = db2.cloudConnection('POST', sql2)
-        return {"response": "200"}
+        return {"response": "200", "id": key}
 
     def return_book(bookID):
-        sql = "UPDATE bookBorrowed SET status = \'RETURNED\', returnDate = CURDATE() WHERE bookID = {} and status = \'BORROWED\' ".format(bookID)
-        db = dbconnection.dbconnection()
-        result = db.cloudConnection('POST', sql)
-        return {"response": "200"}
+        sql1= "select bookBorrowedID from bookBorrowed WHERE bookID={} and status = \'BORROWED\'".format(bookID)
+        db1 = dbconnection.dbconnection()
+        borrowedID = db1.cloudConnection('GET',sql1)
+        sql2 = "UPDATE bookBorrowed SET status = \'RETURNED\', returnDate = CURDATE() WHERE bookID = {} and status = \'BORROWED\' ".format(bookID)
+        db2 = dbconnection.dbconnection()
+        result = db2.cloudConnection('POST', sql2)
+        return {"response": "200", "id": borrowedID[0]['bookBorrowedID']}
 
     def search_book(column, query):
         sql = "SELECT book.bookID, book.title, book.author, book.publishedDate, borrowed.status FROM book LEFT JOIN ( SELECT bookID, status FROM bookBorrowed WHERE status=\'BORROWED\') AS borrowed ON book.bookID = borrowed.bookID WHERE book.{} LIKE \'%{}%\'".format(column, query)
