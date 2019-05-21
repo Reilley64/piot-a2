@@ -2,15 +2,56 @@
 
 {% block title %}Admin Suite - LMS Library{% endblock %}
 
+{% block styles %}
+    {{ super() }}
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+{% endblock styles %}
+
 {% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand mx-auto" href="#">Admin Suite</a>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Admin Suite</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for("logout") }}"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 {% endblock %}
 
 {% block content %}
+    <div class="container mt-1 mb-1">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4 class="mb-0">Books</h4>
+            </div>
+            <div class="card-body">
+                {% for book in books %}
+                    {{ book[0] }} {{ book[1] }} {{ book[2] }} {{ book[3] }}<br>
+                {% endfor %}
+            </div>
+            <div class="card-footer text-center">
+                <div id="buttonForm">
+                    <button type="button" class="btn btn-primary" onclick="turnIntoForm()">Add New Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
-{{ super() }}
+    <script>
+        function turnIntoForm() {
+            document.getElementById("buttonForm").innerHTML = "<form method=\"post\">\n    <div class=\"form-row\">\n        <div class=\"col\">\n            <input type=\"text\" id=\"title\" name=\"title\" class=\"form-control\" placeholder=\"Title\" autofocus required>\n        </div>\n        <div class=\"col\">\n            <input type=\"text\" id=\"author\" name=\"author\" class=\"form-control\" placeholder=\"Author\" required>\n        </div>\n        <div class=\"col\">\n            <input type=\"text\" id=\"publishedDate\" name=\"publishedDate\" class=\"form-control\" placeholder=\"Published Date\" required>\n        </div>\n        <div class=\"col\">\n            <button type=\"submit\" class=\"btn btn-primary btn-block\">Submit</button>\n        </div>\n    </div>\n</form>"
+        }
+    </script>
+    {{ super() }}
 {% endblock %}

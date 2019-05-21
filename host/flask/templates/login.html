@@ -2,18 +2,19 @@
 
 {% block title %}Admin Suite - LMS Library{% endblock %}
 
-{% block navbar %}
+{% block styles %}
+    {{ super() }}
     <link href="{{ url_for("static", filename="styles/signin.css") }}" rel="stylesheet">
-{% endblock %}
+{% endblock styles %}
 
 {% block content %}
     <form class="form-signin text-center" method="post">
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
+        <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
+        <label for="inputEmail" class="sr-only">Username</label>
         <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
     </form>
 {% endblock %}
 
