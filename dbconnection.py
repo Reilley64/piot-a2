@@ -1,7 +1,5 @@
 import pymysql.cursors
 import pymysql
-import time
-from datetime import date
 
 class dbconnection:
     def __init__(self):

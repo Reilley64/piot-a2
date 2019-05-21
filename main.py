@@ -1,6 +1,8 @@
 import socket
 import json
 import functions as Functions
+import calendar as Calendar
+import datetime
 
 class Main():
     def __init__(self):
@@ -45,8 +47,15 @@ class Main():
                         if(jsondata["request"] == 'borrow'):
                             bookID = jsondata['id']
                             response = Functions.borrow_book(self.user, bookID)
+                            if(response['response'] == "200"):
+                                summary = 'ID: {} BORROWED BY: {}'.format(bookID, self.user)
+                                now = datetime.datetime.now()
+                                due_date = now + datetime.timedelta(days=7)
+                                description = 'return by this day: {}'.format(due_date.strftime('%Y-%m-%d'))
+                                Calendar.GoogleCalendar().borrow_book(due_date.strftime('%Y-%m-%d'),summary, description)
                         if(jsondata['request'] == 'return'):
                             bookID = jsondata['id']
+                            Calendar.GoogleCalendar().return_book(bookID)
                             response = Functions.return_book(bookID)
                         print("Sending response.")
                         conn.sendall(json.dumps(response).encode())
