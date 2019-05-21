@@ -1,4 +1,0 @@
-select book.bookID, book.title, book.author, book.publishedDate, bookBorrowed.status from book WHERE title LIKE '%Moby Dick%\ left join bookBorrowed on book.bookID = bookBorrowed.bookID 
-
-
-select book.bookID, book.title, book.author, book.publishedDate, bookBorrowed.status from book left join bookBorrowed on book.bookID = bookBorrowed.bookID and bookBorrowed.status == 'BORROWED' WHERE title LIKE '%1984%' 
