@@ -24,6 +24,7 @@ def main():
                     print("Welcome " + str(username))
             else:
                 print(username + " is already logged in")
+
         elif userInput[0] == "signup":
             if len(userInput) is not 6:
                 print("Command signup takes 5 arguments")
@@ -33,6 +34,7 @@ def main():
                     print("Error creating account: " + result)
                 else:
                     print("Account created")
+
         elif userInput[0] == "connect":
             if len(userInput) > 1:
                 print("Too many arguments for command connect")
@@ -61,7 +63,7 @@ def main():
                             print("2. Author")
                             print("3. Date")
                             print("4. Back")
-                            print(65 * "-")
+                            print(68 * "-")
 
                             userInput = input("")
 
@@ -76,8 +78,9 @@ def main():
                                     continue
 
                                 for book in response:
-                                    print("Title: " + book["title"] + ", Author: " + book["author"] + ", " + book[
-                                        "publishedDate"] + ", Borrowed: " + book["status"])
+                                    print("ID: %-3s Title: %-50s Author: %-25s Published: %-10s Status: %-9s" % (
+                                        book["id"], book["title"], book["author"], book["publishedDate"],
+                                        book["status"]))
 
                             elif userInput == "2":
                                 userInput = input("Insert author: ")
@@ -90,8 +93,9 @@ def main():
                                     continue
 
                                 for book in response:
-                                    print("Title: " + book["title"] + ", Author: " + book["author"] + ", " + book[
-                                        "publishedDate"] + ", Borrowed: " + book["status"])
+                                    print("ID: %-3s Title: %-50s Author: %-25s Published: %-10s Status: %-9s" % (
+                                        book["id"], book["title"], book["author"], book["publishedDate"],
+                                        book["status"]))
 
                             elif userInput == "3":
                                 userInput = input("Insert date: ")
@@ -104,8 +108,9 @@ def main():
                                     continue
 
                                 for book in response:
-                                    print("Title: " + book["title"] + ", Author: " + book["author"] + ", " + book[
-                                        "publishedDate"] + ", Borrowed: " + book["status"])
+                                    print("ID: %-3s Title: %-50s Author: %-25s Published: %-10s Status: %-9s" % (
+                                        book["id"], book["title"], book["author"], book["publishedDate"],
+                                        book["status"]))
 
                             elif userInput == "4":
                                 continue
@@ -116,10 +121,11 @@ def main():
                             message = json.dumps({"request": "borrow", "id": userInput})
                             response = host.sendMessage(message)
 
-                            if response:
+                            if type(response) is str:
+                                print("Error borrowing book: " + response)
+                            elif response:
                                 print("Book borrowed")
-                            else:
-                                print("Error borrowing book")
+
 
                         elif userInput == "3":
                             userInput = input("Insert id: ")
@@ -127,10 +133,10 @@ def main():
                             message = json.dumps({"request": "return", "id": userInput})
                             response = host.sendMessage(message)
 
-                            if response:
+                            if type(response) is str:
+                                print("Error returning book: " + response)
+                            elif response:
                                 print("Book returned")
-                            else:
-                                print("Error returning book")
 
                         elif userInput == "4":
                             response = host.sendMessage(None)

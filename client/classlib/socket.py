@@ -23,6 +23,8 @@ class Socket:
                         return decode["search"]
                     return True
                 elif decode["response"] == "400":
+                    if "error" in decode:
+                        return decode["error"]
                     return False
             else:
                 return True
