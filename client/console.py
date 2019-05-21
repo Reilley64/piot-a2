@@ -17,46 +17,47 @@ def main():
     username = None
 
     while True:
-        print("login | logout | signup | connect | exit")
+        print("login | logout | signup | connect | exit | help")
 
         userInput = input("")
         userInput = userInput.split()
 
         if userInput[0] == "login":
             if len(userInput) is not 3:
-                print("Command login takes 2 arguments")
+                print("Command login takes 2 arguments; example \"login {username} {password}\"\n")
             elif username is None:
                 result = users.login(userInput[1], userInput[2])
                 if not result:
-                    print("Username or password wrong")
+                    print("Username or password wrong \n")
                 else:
                     username = result
-                    print("Welcome " + str(username))
+                    print("Welcome " + str(username) + "\n")
             else:
-                print(username + " is already logged in")
+                print(username + " is already logged in \n")
 
         elif userInput[0] == "logout":
             if len(userInput) > 1:
-                print("Too many arguments for command connect")
+                print("Too many arguments for command logout; example \"logout\"\n")
             elif username is not None:
                 username = None
-                print("Logged out")
+                print("Logged out \n")
             else:
-                print("No one to logout")
+                print("No one to logout \n")
 
         elif userInput[0] == "signup":
             if len(userInput) is not 6:
-                print("Command signup takes 5 arguments")
+                print("Command signup takes 5 arguments; example \"signup {username} {password} {first name} {last "
+                      "name} {email}\"\n")
             else:
                 result = users.createUser(userInput[1], userInput[2], userInput[3], userInput[4], userInput[5])
                 if not result:
-                    print("Error creating account: " + result)
+                    print("Error creating account: " + result + "\n")
                 else:
-                    print("Account created")
+                    print("Account created \n")
 
         elif userInput[0] == "connect":
             if len(userInput) > 1:
-                print("Too many arguments for command connect")
+                print("Too many arguments for command connect; example \"connect\"\n")
             elif username is not None:
                 name = users.getName(username)
                 print("Connecting...")
@@ -160,13 +161,26 @@ def main():
                 else:
                     print("Connection failure")
             else:
-                print("You must login first")
+                print("You must login first \n")
 
         elif userInput[0] == "exit":
-            break
+            if len(userInput) > 1:
+                print("Too many arguments for command exit; example \"exit\"\n")
+            else:
+                break
+
+        elif userInput[0] == "help":
+            print("This is the command console for the Library LMS system\n"
+                  "login: Logs into the system; example \"login {username} {password}\"\n"
+                  "logout: Logs out of the system; example \"logout\"\n"
+                  "signup: Signup to the system; example "
+                  "\"signup {username} {password} {first name} {last name} {email}\"\n"
+                  "connect: Connects to the master server; example \"connect\"\n"
+                  "exit: Exits out of this console; example \"exit\"\n"
+                  "help: Shows this\n")
 
         else:
-            print("That command doesn't exist")
+            print("That command doesn't exist \n")
 
 
 if __name__ == "__main__":
