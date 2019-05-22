@@ -20,7 +20,12 @@ class Database():
                        (title, author, publishedDate))
         self.connection.commit()
 
-    def removeBook(self, id):
+    def removeBook(self, bookID):
         cursor = self.connection.cursor()
-        cursor.execute("DELETE FROM book WHERE bookID=%s", (id,))
+        cursor.execute("DELETE FROM book WHERE bookID=%s", (bookID,))
         self.connection.commit()
+
+    def getOneBook(self, bookID):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM book WHERE bookID=%s;", (bookID,))
+        return cursor.fetchone()

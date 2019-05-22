@@ -48,3 +48,14 @@ def logout():
 
     username = None
     return redirect(url_for("index"))
+
+
+@app.route("/book/<bookID>")
+def book(bookID):
+    global database
+
+    if not username:
+        return redirect(url_for("login"))
+    else:
+        book = database.getOneBook(bookID)
+        return render_template("book.html", book=book)
