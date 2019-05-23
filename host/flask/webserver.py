@@ -16,7 +16,11 @@ def index():
     global username
 
     if request.method == "POST":
-        database.addBook(request.form["title"], request.form["author"], request.form["publishedDate"])
+        if request.form["request"] == "add":
+            database.addBook(request.form["title"], request.form["author"], request.form["publishedDate"])
+
+        if request.form["request"] == "delete":
+            database.deleteBook(request.form["bookID"])
 
         books = database.getAllBooks()
         return render_template("index.html", books=books)

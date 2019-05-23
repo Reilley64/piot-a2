@@ -20,8 +20,9 @@ class Database():
                        (title, author, publishedDate))
         self.connection.commit()
 
-    def removeBook(self, bookID):
+    def deleteBook(self, bookID):
         cursor = self.connection.cursor()
+        cursor.execute("DELETE FROM bookBorrowed WHERE bookID=%s", (bookID,))
         cursor.execute("DELETE FROM book WHERE bookID=%s", (bookID,))
         self.connection.commit()
 
