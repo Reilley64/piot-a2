@@ -117,3 +117,15 @@ class Database:
         cursor.execute("SELECT * FROM bookBorrowed WHERE YEARWEEK(returnDate)=%s;", (week,))
         rows = cursor.fetchall()
         return rows
+
+    def getAverageBorrowDurationData(self, bookID):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT borrowDate, returnDate FROM bookBorrowed WHERE bookID=%s AND returnDate IS NOT NULL;",
+                       (bookID,))
+        rows = cursor.fetchall()
+        y = []
+        for row in rows:
+            y.append(
+                (datetime.combine(row[1], datetime.now().time()) - datetime.combine(row[0],
+                                                                                    datetime.now().time())).days)
+        return y

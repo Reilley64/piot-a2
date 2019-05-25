@@ -4,7 +4,7 @@ import csv
 import plotly
 import plotly.graph_objs as go
 from classlib.database import Database
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, render_template, request, redirect, url_for, send_file, jsonify
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
@@ -81,6 +81,18 @@ def averageBorrowDayGraph(bookID):
     return json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
 
 
+def averageBorrowDurationGraph(bookID):
+    global database
+
+    y = database.getAverageBorrowDurationData(bookID)
+    data = [
+        go.Bar(
+            y=y
+        )
+    ]
+    return json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+
 @app.route("/book/<bookID>")
 def book(bookID):
     global database
@@ -90,60 +102,77 @@ def book(bookID):
     else:
         book = database.getOneBook(bookID)
         barGraph = averageBorrowDayGraph(bookID)
-        return render_template("book.html", book=book, plot=barGraph)
+        otherGraph = averageBorrowDurationGraph(bookID)
+        return render_template("book.html", book=book, plot1=barGraph, plot2=otherGraph)
 
 
 @app.route("/report", methods=["GET", "POST"])
 def report():
-    if request.method == "POST":
-        if request.form["request"] == "borrowsByDate":
-            rows = database.getBorrowsByDate(request.form["date"])
-            csvData = [["id", "userID", "bookID"]]
-            for row in rows:
-                csvData.append([row[0], row[1], row[2]])
-            with open("pendingReport.csv", "w", newline="") as report:
-                writer = csv.writer(report)
-                writer.writerows(csvData)
-            return send_file("pendingReport.csv", mimetype="text/csv",
-                             attachment_filename="borrowsOn" + request.form["date"] + ".csv", as_attachment=True)
-
-        if request.form["request"] == "returnsByDate":
-            rows = database.getReturnsByDate(request.form["date"])
-            csvData = [["id", "userID", "bookID"]]
-            for row in rows:
-                csvData.append([row[0], row[1], row[2]])
-            with open("pendingReport.csv", "w", newline="") as report:
-                writer = csv.writer(report)
-                writer.writerows(csvData)
-            return send_file("pendingReport.csv", mimetype="text/csv",
-                             attachment_filename="returnsOn" + request.form["date"] + ".csv", as_attachment=True)
-
-        if request.form["request"] == "borrowsByWeek":
-            rows = database.getBorrowsByWeek(request.form["week"])
-            csvData = [["id", "userID", "bookID"]]
-            for row in rows:
-                csvData.append([row[0], row[1], row[2]])
-            with open("pendingReport.csv", "w", newline="") as report:
-                writer = csv.writer(report)
-                writer.writerows(csvData)
-            return send_file("pendingReport.csv", mimetype="text/csv",
-                             attachment_filename="returnsIn" + request.form["week"] + ".csv", as_attachment=True)
-
-        if request.form["request"] == "returnsByWeek":
-            rows = database.getReturnsByWeek(request.form["week"])
-            csvData = [["id", "userID", "bookID"]]
-            for row in rows:
-                csvData.append([row[0], row[1], row[2]])
-            with open("pendingReport.csv", "w", newline="") as report:
-                writer = csv.writer(report)
-                writer.writerows(csvData)
-            return send_file("pendingReport.csv", mimetype="text/csv",
-                             attachment_filename="returnsIn" + request.form["week"] + ".csv", as_attachment=True)
-
+    if not username:
+        return redirect(url_for("login"))
     else:
-        borrowDates = database.getBorrowedDates()
-        returnDates = database.getReturnedDates()
-        borrowWeeks = database.getBorrowedWeeks()
-        returnWeeks = database.getReturnedWeeks()
-        return render_template("report.html", borrowDates=borrowDates, returnDates=returnDates, borrowWeeks=borrowWeeks,
-                               returnWeeks=returnWeeks)
+        if request.method == "POST":
+            if request.form["request"] == "borrowsByDate":
+                rows = database.getBorrowsByDate(request.form["date"])
+                csvData = [["id", "userID", "bookID"]]
+                for row in rows:
+                    csvData.append([row[0], row[1], row[2]])
+                with open("pendingReport.csv", "w", newline="") as report:
+                    writer = csv.writer(report)
+                    writer.writerows(csvData)
+                return send_file("pendingReport.csv", mimetype="text/csv",
+                                 attachment_filename="borrowsOn" + request.form["date"] + ".csv", as_attachment=True)
+
+            if request.form["request"] == "returnsByDate":
+                rows = database.getReturnsByDate(request.form["date"])
+                csvData = [["id", "userID", "bookID"]]
+                for row in rows:
+                    csvData.append([row[0], row[1], row[2]])
+                with open("pendingReport.csv", "w", newline="") as report:
+                    writer = csv.writer(report)
+                    writer.writerows(csvData)
+                return send_file("pendingReport.csv", mimetype="text/csv",
+                                 attachment_filename="returnsOn" + request.form["date"] + ".csv", as_attachment=True)
+
+            if request.form["request"] == "borrowsByWeek":
+                rows = database.getBorrowsByWeek(request.form["week"])
+                csvData = [["id", "userID", "bookID"]]
+                for row in rows:
+                    csvData.append([row[0], row[1], row[2]])
+                with open("pendingReport.csv", "w", newline="") as report:
+                    writer = csv.writer(report)
+                    writer.writerows(csvData)
+                return send_file("pendingReport.csv", mimetype="text/csv",
+                                 attachment_filename="returnsIn" + request.form["week"] + ".csv", as_attachment=True)
+
+            if request.form["request"] == "returnsByWeek":
+                rows = database.getReturnsByWeek(request.form["week"])
+                csvData = [["id", "userID", "bookID"]]
+                for row in rows:
+                    csvData.append([row[0], row[1], row[2]])
+                with open("pendingReport.csv", "w", newline="") as report:
+                    writer = csv.writer(report)
+                    writer.writerows(csvData)
+                return send_file("pendingReport.csv", mimetype="text/csv",
+                                 attachment_filename="returnsIn" + request.form["week"] + ".csv", as_attachment=True)
+
+        else:
+            borrowDates = database.getBorrowedDates()
+            returnDates = database.getReturnedDates()
+            borrowWeeks = database.getBorrowedWeeks()
+            returnWeeks = database.getReturnedWeeks()
+            return render_template("report.html", borrowDates=borrowDates, returnDates=returnDates,
+                                   borrowWeeks=borrowWeeks,
+                                   returnWeeks=returnWeeks)
+
+
+@app.route("/api/books")
+def apiBooks():
+    books = database.getAllBooks()
+    return jsonify(books)
+
+
+@app.route("/api/book/<bookID>")
+def apiBook(bookID):
+    book = database.getOneBook(bookID)
+    return jsonify(book)
