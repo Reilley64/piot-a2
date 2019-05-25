@@ -1,8 +1,3 @@
-import dbconnection as dbconnection
-import time
-import datetime
-import uuid
-
 class Functions:
     def check_if_user_doesnt_exist(user):
         sql = "SELECT * FROM lmsUser WHERE username = '{}'".format(user)

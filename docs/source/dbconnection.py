@@ -1,6 +1,3 @@
-import pymysql.cursors
-import pymysql
-
 class dbconnection:
     def __init__(self):
         self.pymysql = pymysql
