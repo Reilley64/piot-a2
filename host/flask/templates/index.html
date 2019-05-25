@@ -1,0 +1,154 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Admin Suite - LMS Library{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="{{ url_for("static", filename="styles/main.css") }}" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" rel="stylesheet">
+{% endblock styles %}
+
+{% block navbar %}
+    {% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+    <main role="main">
+        <div class="row">
+            <div class="col">
+                <div id="alert">
+                    {% if error is defined %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error:</strong> {{ error }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row mt-1 mb-1">
+            <div class="container">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h4 class="mb-0">Books</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-11">
+                                    <table class="table table-borderless table-hover">
+                                        <thead>
+                                        <tr>
+                                            <td style="height: 49px;">ID</td>
+                                            <td style="height: 49px;">Title</td>
+                                            <td style="height: 49px;">Author</td>
+                                            <td style="height: 49px;">Published Date</td>
+                                            <td style="height: 49px;">Status</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for book in books %}
+                                            <tr class="clickable-row" data-href="{{ url_for("book", bookID=book[0]) }}">
+                                                <td class="align-middle" style="height: 63px;">{{ book[0] }}</td>
+                                                <td class="align-middle" style="height: 63px;">{{ book[1] }}</td>
+                                                <td class="align-middle" style="height: 63px;">{{ book[2] }}</td>
+                                                <td class="align-middle" style="height: 63px;">{{ book[3] }}</td>
+                                                <td class="align-middle" style="height: 63px;">
+                                                    {% if book[4] == None %}
+                                                        RETURNED
+                                                    {% else %}
+                                                        {{ book[4] }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-1">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                        <tr>
+                                            <td class="border-light" style="height: 49px;"></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for book in books %}
+                                            <tr>
+                                                <td style="height: 63px;">
+                                                    {% if book[4] == "BORROWED" %}
+                                                        <button type="button" class="btn btn-danger"
+                                                                onclick="deleteAlert({{ book[0] }}, {{ '"' + book[1] + '"' }})"
+                                                                disabled>
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                    {% else %}
+                                                        <button type="button" class="btn btn-danger"
+                                                                onclick="deleteAlert({{ book[0] }}, {{ '"' + book[1] + '"' }})">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <div id="buttonForm">
+                                <button type="button" class="btn btn-primary" onclick="turnIntoForm()">Add New Book
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        function turnIntoForm() {
+            document.getElementById("buttonForm").innerHTML = "<form method=\"post\">\n    <input type=\"hidden\" id=\"request\" name=\"request\" value=\"add\">\n    <div class=\"form-row\">\n        <div class=\"col\">\n            <input type=\"text\" id=\"title\" name=\"title\" class=\"form-control\" placeholder=\"Title\" autofocus required>\n        </div>\n        <div class=\"col\">\n            <input type=\"text\" id=\"author\" name=\"author\" class=\"form-control\" placeholder=\"Author\" required>\n        </div>\n        <div class=\"col\">\n            <input type=\"text\" id=\"publishedDate\" name=\"publishedDate\" class=\"form-control\" placeholder=\"Published Date\" required>\n        </div>\n        <div class=\"col\">\n            <button type=\"submit\" class=\"btn btn-primary btn-block\">Submit</button>\n        </div>\n    </div>\n</form>";
+        }
+
+        function resetAlert() {
+            document.getElementById("alert").innerHTML = "";
+        }
+
+        function deleteAlert(bookID, bookTitle) {
+            document.getElementById("alert").innerHTML = `<div class="alert alert-danger" role="alert">
+    <form method="post">
+        <input type="hidden" id="request" name="request" value="delete">
+        <input type="hidden" id="bookID" name="bookID" value="${bookID}">
+        <div class="form-row">
+            <div class="col-10 d-flex align-items-center text-center">
+                <div class="container-fluid">
+                    Are you sure you want to delete <kbd>${bookTitle}</kbd>?
+                </div>
+            </div>
+            <div class="col-1">
+                <button type="submit" class="btn btn-secondary btn-block">Yes</button>
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-secondary btn-block" onclick="resetAlert()">No</button>
+            </div>
+        </div>
+    </form>
+</div>`;
+        }
+
+        jQuery(document).ready(function ($) {
+            $(".clickable-row").click(function () {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+{% endblock %}

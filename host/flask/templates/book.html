@@ -1,0 +1,89 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Admin Suite - LMS Library{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="{{ url_for("static", filename="styles/main.css") }}" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+{% endblock styles %}
+
+{% block navbar %}
+    {% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-1">
+        <div class="card-columns">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ book[1] }}</h4>
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <th>
+                                Author
+                            </th>
+                            <td>
+                                {{ book[2] }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Published
+                            </th>
+                            <td>
+                                {{ book[3] }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Borrowed
+                            </th>
+                            <td>
+                                {{ book[4] }} times
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <span class="text-muted">Book Details</span>
+                </div>
+            </div>
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+            <div class="card">
+                <div class="card-body">
+                    <div class="chart" id="bargraph">
+                        <script>
+                            let bargraph = {{plot1 | safe}};
+                            Plotly.plot("bargraph", bargraph, {}, {displayModeBar: false});
+                        </script>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="text-muted">Average Borrowed Day</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="chart" id="othergraph">
+                        <script>
+                            let othergraph = {{plot2 | safe}};
+                            Plotly.plot("othergraph", othergraph, {}, {displayModeBar: false});
+                        </script>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="text-muted">Borrow Durations</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
