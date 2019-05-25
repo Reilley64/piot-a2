@@ -1,40 +1,18 @@
-import socket
-import json
-import functions as Functions
-import googlecalendar as Calendar
-import datetime
-
-"""
-main.py
-=================================================
-The core module of the host folder of the project
-"""
-
 class Main():
-    """An example docstring for a class definition."""
+    """The Main class initiates the user and listens for data from the client pi"""
     def __init__(self):
-        """
-    Return the most important thing about a person.
-    Parameters
-    ----------
-    your_name
-        A string indicating the name of the person.
-    """
         self.HOST = ""
         self.PORT = 65000 
         self.ADDRESS = (self.HOST, self.PORT)
+        """Identifies Host name and port to use"""
         self.user = ""
+        """Identifies User"""
         self.name = ""
+        """Identifies Users Name"""
         self.response = ""
-
+        
     def listener(self):
-        """
-        Blah blah blah.
-        Parameters
-        ---------
-        name
-            A string to assign to the `name` instance attribute.
-        """
+        """Listens for data sent through sockets from the client pi"""
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind(self.ADDRESS)
             s.listen()

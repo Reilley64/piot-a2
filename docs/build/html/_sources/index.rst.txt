@@ -1,12 +1,15 @@
-Welcome to Smary Library's documentation!
+Welcome to Smart Library's documentation!
 =========================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   code
-   
+   main
+   dbconnection
+   functions
+   googlecalendar
+
 Indices and tables
 ==================
 

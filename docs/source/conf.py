@@ -17,8 +17,8 @@ sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Smary Library'
-copyright = '2019, Matt Reilley Sam James'
+project = 'Smart Library'
+copyright = '2019, Matthieu Etienne, Reilley Gray, Sam Radford, James Gale'
 author = 'Matt Reilley Sam James'
 
 # The full version, including alpha/beta/rc tags

@@ -1,4 +1,4 @@
-Code docs
+main.py docs
 =========
 
 .. module:: main
