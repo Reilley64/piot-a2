@@ -2,6 +2,7 @@ import json
 
 
 class Request:
+    #Requests for all main features 
     request = None
     bookID = None
     column = None

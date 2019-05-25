@@ -5,7 +5,9 @@ import googlecalendar as Calendar
 import datetime
 
 class Main():
+    #Main class for host listener
     def __init__(self):
+        #Initializing connection
         self.HOST = ""
         self.PORT = 65000 
         self.ADDRESS = (self.HOST, self.PORT)
@@ -14,6 +16,7 @@ class Main():
         self.response = ""
 
     def listener(self):
+        #Listens in for Client Pi
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind(self.ADDRESS)
             s.listen()
@@ -25,6 +28,7 @@ class Main():
                 while connection:
                     data = conn.recv(4096)
                     if(data):
+                        #If statements for requesting data from client pi
                         jsondata = json.loads(data.decode())
                         print("Received {} bytes of data decoded to: '{}'".format(
                             len(data), data.decode()))

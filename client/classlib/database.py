@@ -3,8 +3,10 @@ import logging
 import sqlite3
 
 
-class Database:
-    def __init__(self):
+class Database: 
+    #User database setup
+    def __init__(self): 
+        #Sql Database initialisation
         try:
             self.connection = sqlite3.connect("database/sqlite.db")
         except sqlite3.Error as e:
@@ -13,7 +15,7 @@ class Database:
 
     def createUser(self, username, password, firstName, lastName, email):
         passwordHash = pbkdf2_sha256.hash(password)
-
+        #Password hashing for privacy and user creation via insert into details below
         try:
             cursor = self.connection.cursor()
             cursor.execute("INSERT INTO users (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?);",
@@ -25,6 +27,7 @@ class Database:
         return True
 
     def getName(self, username):
+        #Getting user
         try:
             cursor = self.connection.cursor()
             cursor.execute("SELECT firstName FROM users WHERE username=?;", (username,))
@@ -35,6 +38,7 @@ class Database:
         return rows[0]
 
     def login(self, username, password):
+        #Logging in user via username and password in database
         try:
             cursor = self.connection.cursor()
             cursor.execute("SELECT username, password FROM users WHERE username=?;", (username,))

@@ -4,7 +4,9 @@ import datetime
 import uuid
 
 class Functions:
+    #All basic functions for library system
     def check_if_user_doesnt_exist(user):
+        #Checks database for username
         sql = "SELECT * FROM lmsUser WHERE username = '{}'".format(user)
         db = dbconnection.dbconnection()
         result = db.cloudConnection('GET', sql)
@@ -14,12 +16,14 @@ class Functions:
             return False
 
     def create_user(user, name):
+        #Adds user to database via username and name
         sql = "INSERT INTO lmsUser (username, name) VALUES ('{}', '{}')".format(user, name)
         db = dbconnection.dbconnection()
         result = db.cloudConnection('POST', sql)
         return result
 
     def book_unavailable(bookID):
+        #Sets book to borrowed
         sql = "select * from bookBorrowed where bookID = {} AND status = \'BORROWED\'".format(bookID)
         db = dbconnection.dbconnection()
         result = db.cloudConnection('GET', sql)
@@ -30,6 +34,7 @@ class Functions:
                 return True
 
     def borrow_book(user, bookID):
+        #Book borrowing for user via UserID
         sql = "SELECT lmsUserID FROM lmsUser WHERE username = '{}'".format(user)
         db = dbconnection.dbconnection()
         userID = db.cloudConnection('GET', sql)
@@ -42,6 +47,7 @@ class Functions:
         return {"response": "200", "id": key}
 
     def return_book(bookID):
+        #Return book for user via bookID
         sql1= "select bookBorrowedID from bookBorrowed WHERE bookID={} and status = \'BORROWED\'".format(bookID)
         db1 = dbconnection.dbconnection()
         borrowedID = db1.cloudConnection('GET',sql1)
@@ -51,6 +57,7 @@ class Functions:
         return {"response": "200", "id": borrowedID[0]['bookBorrowedID']}
 
     def search_book(column, query):
+        #search for book in database via bookID, book title, book author, book published date and status
         sql = "SELECT book.bookID, book.title, book.author, book.publishedDate, borrowed.status FROM book LEFT JOIN ( SELECT bookID, status FROM bookBorrowed WHERE status=\'BORROWED\') AS borrowed ON book.bookID = borrowed.bookID WHERE book.{} LIKE \'%{}%\'".format(column, query)
         db = dbconnection.dbconnection()
         result = db.cloudConnection('GET', sql)

@@ -9,6 +9,7 @@ from google.auth.transport.requests import Request
 # If modifying these scopes, delete the file token.pickle.
 
 class GoogleCalendar():
+    #Connecting google calendar to book borrowing library
     def __init__(self):
         self.SCOPES = ['https://www.googleapis.com/auth/calendar']
         creds = None
@@ -29,6 +30,7 @@ class GoogleCalendar():
    
    
     def borrow_book(self, date, summary, description, eventID):
+        #Borrowed book recording details and setting details for event
         event = {
         'id':'',
         'summary': 'Returned',
@@ -50,5 +52,6 @@ class GoogleCalendar():
         event = self.service.events().insert(calendarId='primary', body=event).execute()
     
     def return_book(self, eventID):
+        #Book returned on calendar
         self.service.events().delete(calendarId='primary', eventId=eventID).execute()
 
