@@ -1,5 +1,7 @@
 class Functions:
+    """The Functions class creates users and checks for users, as well as the main book borrowing features: return, borrow and search"""
     def check_if_user_doesnt_exist(user):
+        """Checks if user doesnt exist in users database"""
         sql = "SELECT * FROM lmsUser WHERE username = '{}'".format(user)
         db = dbconnection.dbconnection()
         result = db.cloudConnection('GET', sql)
@@ -9,12 +11,14 @@ class Functions:
             return False
 
     def create_user(user, name):
+        """Creates the user based on username and name"""
         sql = "INSERT INTO lmsUser (username, name) VALUES ('{}', '{}')".format(user, name)
         db = dbconnection.dbconnection()
         result = db.cloudConnection('POST', sql)
         return result
 
     def book_unavailable(bookID):
+        """Checks if book is already borrowed in the database"""
         sql = "select * from bookBorrowed where bookID = {} AND status = \'BORROWED\'".format(bookID)
         db = dbconnection.dbconnection()
         result = db.cloudConnection('GET', sql)
@@ -25,6 +29,7 @@ class Functions:
                 return True
 
     def borrow_book(user, bookID):
+        """Sets the book from avaialable to unavailable recording User ID"""
         sql = "SELECT lmsUserID FROM lmsUser WHERE username = '{}'".format(user)
         db = dbconnection.dbconnection()
         userID = db.cloudConnection('GET', sql)
@@ -37,6 +42,7 @@ class Functions:
         return {"response": "200", "id": key}
 
     def return_book(bookID):
+        """Sets book to returned and returns returnDate"""
         sql1= "select bookBorrowedID from bookBorrowed WHERE bookID={} and status = \'BORROWED\'".format(bookID)
         db1 = dbconnection.dbconnection()
         borrowedID = db1.cloudConnection('GET',sql1)
@@ -46,6 +52,7 @@ class Functions:
         return {"response": "200", "id": borrowedID[0]['bookBorrowedID']}
 
     def search_book(column, query):
+        """Sql search for book via bookID, bookTitle, bookAuthor and publishedDate"""
         sql = "SELECT book.bookID, book.title, book.author, book.publishedDate, borrowed.status FROM book LEFT JOIN ( SELECT bookID, status FROM bookBorrowed WHERE status=\'BORROWED\') AS borrowed ON book.bookID = borrowed.bookID WHERE book.{} LIKE \'%{}%\'".format(column, query)
         db = dbconnection.dbconnection()
         result = db.cloudConnection('GET', sql)

@@ -1,5 +1,5 @@
 class dbconnection:
-    """The Main class initiates and connects the sql library, and establishes a cloud db connection"""
+    """The dbconnection class initiates and connects the sql library, and establishes a cloud db connection"""
     def __init__(self):
         self.pymysql = pymysql
 
