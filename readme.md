@@ -1,16 +1,15 @@
 # Smart Library
 
-Smart Library is a smart office web IOT application.
-Features Include:
-- Borrowing books
-- Returning books
-- Search books
-- Register and Login
-- Add, Edit and Remove books
-- Data Visualisation Report
-- Facial Recognition
-- Voice Recognition
-- Object Detection
+Smart Library is a smart office web IOT application.<br>Features Include:
+[x] Borrowing books
+[x] Returning books
+[x] Search books
+[x] Register and Login
+[x] Add, Edit and Remove books
+[x] Data Visualisation Report
+[x] Facial Recognition
+[x] Voice Recognition
+[x] Object Detection
 
 ## Prerequisites
 
@@ -35,7 +34,7 @@ pip3 install sphinx
 ```
 
 ## Contributors
-Reilley Gray
-Matthieu Etienne
-Sam Radford
+Reilley Gray<br>
+Matthieu Etienne<br>
+Sam Radford<br>
 James Gale
