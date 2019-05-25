@@ -12,6 +12,8 @@ Welcome to Smart Library's documentation!
    database
    request
    socketdoc
+   databaseflask
+   webserver
 
 Indices and tables
 ==================

@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>databaseflask.py &#8212; Smart Library 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="webserver.py" href="webserver.html" />
+    <link rel="prev" title="socketdoc.py" href="socketdoc.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-databaseflask">
+<span id="databaseflask-py"></span><h1>databaseflask.py<a class="headerlink" href="#module-databaseflask" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="databaseflask.DatabaseFlask">
+<em class="property">class </em><code class="descclassname">databaseflask.</code><code class="descname">DatabaseFlask</code><a class="headerlink" href="#databaseflask.DatabaseFlask" title="Permalink to this definition">¶</a></dt>
+<dd><p>The database class initialises and connects to the sql database, grabs all books, adds and delete books for the flask website</p>
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.addBook">
+<code class="descname">addBook</code><span class="sig-paren">(</span><em>title</em>, <em>author</em>, <em>publishedDate</em><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.addBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a book to the database with title author and published date values entered</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.deleteBook">
+<code class="descname">deleteBook</code><span class="sig-paren">(</span><em>bookID</em><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.deleteBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a book from the database based on bookID and if not returned</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getAllBooks">
+<code class="descname">getAllBooks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getAllBooks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grabs all books from the database to use in graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getAverageBorrowDurationData">
+<code class="descname">getAverageBorrowDurationData</code><span class="sig-paren">(</span><em>bookID</em><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getAverageBorrowDurationData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for borrow duration and averages the data for potential graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getBookAverageBorrowData">
+<code class="descname">getBookAverageBorrowData</code><span class="sig-paren">(</span><em>bookID</em><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getBookAverageBorrowData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for book average borrowed for potential graph data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getBorrowedDates">
+<code class="descname">getBorrowedDates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getBorrowedDates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for borrowed dates of all books for potential graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getBorrowedWeeks">
+<code class="descname">getBorrowedWeeks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getBorrowedWeeks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for borrowed dates of all books sorted by weeks for potential graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getBorrowsByDate">
+<code class="descname">getBorrowsByDate</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getBorrowsByDate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for borrowed dates of all books for potential graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getBorrowsByWeek">
+<code class="descname">getBorrowsByWeek</code><span class="sig-paren">(</span><em>week</em><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getBorrowsByWeek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for borrowed dates of all books sorted by weeks for potential graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getOneBook">
+<code class="descname">getOneBook</code><span class="sig-paren">(</span><em>bookID</em><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getOneBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grabs singular book for graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getReturnedDates">
+<code class="descname">getReturnedDates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getReturnedDates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for returned dates of all books for potential graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getReturnedWeeks">
+<code class="descname">getReturnedWeeks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getReturnedWeeks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for returned dates of all books sorted by weeks for potential graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getReturnsByDate">
+<code class="descname">getReturnsByDate</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getReturnsByDate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for returned dates of all books for potential graphing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="databaseflask.DatabaseFlask.getReturnsByWeek">
+<code class="descname">getReturnsByWeek</code><span class="sig-paren">(</span><em>week</em><span class="sig-paren">)</span><a class="headerlink" href="#databaseflask.DatabaseFlask.getReturnsByWeek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Querys the database for returned dates of all books sorted by weeks for potential graphing</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Smart Library</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main.html">main.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbconnection.html">dbconnection.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">functions.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="googlecalendar.html">googlecalendar.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">database.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request.html">request.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="socketdoc.html">socketdoc.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">databaseflask.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webserver.html">webserver.py</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="socketdoc.html" title="previous chapter">socketdoc.py</a></li>
+      <li>Next: <a href="webserver.html" title="next chapter">webserver.py</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Matthieu Etienne, Reilley Gray, Sam Radford, James Gale.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/databaseflask.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
