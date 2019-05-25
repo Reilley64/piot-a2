@@ -1,5 +1,5 @@
-dbconnection.py docs
-====================
+dbconnection.py 
+================
 
 .. module:: dbconnection
 

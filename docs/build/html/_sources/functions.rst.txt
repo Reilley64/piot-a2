@@ -1,5 +1,5 @@
-functions.py docs
-=================
+functions.py
+=============
 
 .. module:: functions
 

@@ -1,4 +1,5 @@
 class GoogleCalendar():
+    """The GoogleCalendar class sets up the google calendar with borrow and return dates."""
     def __init__(self):
         self.SCOPES = ['https://www.googleapis.com/auth/calendar']
         creds = None
@@ -19,6 +20,7 @@ class GoogleCalendar():
    
    
     def borrow_book(self, date, summary, description, eventID):
+        """Sets date on borrowing a book on the google calendar"""
         event = {
         'id':'',
         'summary': 'Returned',
@@ -40,5 +42,6 @@ class GoogleCalendar():
         event = self.service.events().insert(calendarId='primary', body=event).execute()
     
     def return_book(self, eventID):
+        """Sets date on returning a book on the google calendar"""
         self.service.events().delete(calendarId='primary', eventId=eventID).execute()
 
