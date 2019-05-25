@@ -19,6 +19,7 @@ Python3.5 or higher and a Raspberry Pi model 3B/B+ with Raspbian.
 Flask Installation:
 pip3 install mysql-connector
 pip3 install flask
+pip3 install plotly
 
 Client Installation:
 pip3 install sqlite3
