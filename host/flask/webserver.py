@@ -1,6 +1,12 @@
+import json
+
+import numpy as np
+import pandas as pd
+import plotly
+import plotly.graph_objs as go
+from classlib.database import Database
 from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap
-from classlib.database import Database
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -20,7 +26,15 @@ def index():
             database.addBook(request.form["title"], request.form["author"], request.form["publishedDate"])
 
         if request.form["request"] == "delete":
-            database.deleteBook(request.form["bookID"])
+            result = database.deleteBook(request.form["bookID"])
+            if not result:
+                books = database.getAllBooks()
+                specificBook = None;
+                for book in books:
+                    if str(book[0]) == request.form["bookID"]:
+                        specificBook = book
+                error = specificBook[1] + " can not be deleted, it is currently being borrowed"
+                return render_template("index.html", books=books, error=error)
 
         books = database.getAllBooks()
         return render_template("index.html", books=books)
@@ -54,6 +68,17 @@ def logout():
     return redirect(url_for("index"))
 
 
+def averageBorrowDayGraph(bookID):
+
+
+    data = [
+        go.Bar(
+            x=["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            y=[1, 2, 3, 4, 5]
+        )
+    ]
+    return json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
 @app.route("/book/<bookID>")
 def book(bookID):
     global database
@@ -62,4 +87,5 @@ def book(bookID):
         return redirect(url_for("login"))
     else:
         book = database.getOneBook(bookID)
-        return render_template("book.html", book=book)
+        barGraph = averageBorrowDayGraph(bookID)
+        return render_template("book.html", book=book, plot=barGraph)

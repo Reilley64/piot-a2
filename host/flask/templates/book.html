@@ -4,13 +4,14 @@
 
 {% block styles %}
     {{ super() }}
+    <link href="{{ url_for("static", filename="styles/main.css") }}" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 {% endblock styles %}
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Admin Suite</a>
+        <a class="navbar-brand" href="{{ url_for("index") }}">Admin Suite</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +29,61 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ book[1] }}</h1>
+    <div class="container mt-1">
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ book[1] }}</h4>
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <th>
+                                Author
+                            </th>
+                            <td>
+                                {{ book[2] }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Published
+                            </th>
+                            <td>
+                                {{ book[3] }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Borrowed
+                            </th>
+                            <td>
+                                {{ book[4] }} times
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <span class="text-muted">Book Details</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+                    <div class="chart" id="bargraph">
+                        <script>
+                            let graphs = {{plot | safe}};
+                            Plotly.plot("bargraph", graphs, {}, {displayModeBar: false});
+                        </script>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="text-muted">Average Borrowed Day</span>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}

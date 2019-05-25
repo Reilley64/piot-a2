@@ -4,14 +4,14 @@
 
 {% block styles %}
     {{ super() }}
-    <link href="{{ url_for("static", filename="styles/index.css") }}" rel="stylesheet">
+    <link href="{{ url_for("static", filename="styles/main.css") }}" rel="stylesheet">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" rel="stylesheet">
 {% endblock styles %}
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Admin Suite</a>
+        <a class="navbar-brand" href="{{ url_for("index") }}">Admin Suite</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,13 +29,19 @@
 {% endblock %}
 
 {% block content %}
-    {% if error != null %}
-        wtf
-    {% endif %}
     <main role="main">
         <div class="row">
             <div class="col">
-                <div id="alert"></div>
+                <div id="alert">
+                    {% if error is defined %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error:</strong> {{ error }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
         <div class="row mt-1 mb-1">
@@ -51,17 +57,27 @@
                                     <table class="table table-borderless table-hover">
                                         <thead>
                                         <tr>
+                                            <td style="height: 49px;">ID</td>
                                             <td style="height: 49px;">Title</td>
                                             <td style="height: 49px;">Author</td>
                                             <td style="height: 49px;">Published Date</td>
+                                            <td style="height: 49px;">Status</td>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {% for book in books %}
                                             <tr class="clickable-row" data-href="{{ url_for("book", bookID=book[0]) }}">
+                                                <td class="align-middle" style="height: 63px;">{{ book[0] }}</td>
                                                 <td class="align-middle" style="height: 63px;">{{ book[1] }}</td>
                                                 <td class="align-middle" style="height: 63px;">{{ book[2] }}</td>
                                                 <td class="align-middle" style="height: 63px;">{{ book[3] }}</td>
+                                                <td class="align-middle" style="height: 63px;">
+                                                    {% if book[4] == None %}
+                                                        RETURNED
+                                                    {% else %}
+                                                        {{ book[4] }}
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -78,10 +94,18 @@
                                         {% for book in books %}
                                             <tr>
                                                 <td style="height: 63px;">
-                                                    <button type="button" class="btn btn-danger"
-                                                            onclick="deleteAlert({{ book[0] }}, {{ '"' + book[1] + '"' }})">
-                                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                                    </button>
+                                                    {% if book[4] == "BORROWED" %}
+                                                        <button type="button" class="btn btn-danger"
+                                                                onclick="deleteAlert({{ book[0] }}, {{ '"' + book[1] + '"' }})"
+                                                                disabled>
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                    {% else %}
+                                                        <button type="button" class="btn btn-danger"
+                                                                onclick="deleteAlert({{ book[0] }}, {{ '"' + book[1] + '"' }})">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                    {% endif %}
                                                 </td>
                                             </tr>
                                         {% endfor %}
