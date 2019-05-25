@@ -1,0 +1,104 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Admin Suite - LMS Library{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="{{ url_for("static", filename="styles/main.css") }}" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+{% endblock styles %}
+
+{% block navbar %}
+    {% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-1 mb-1">
+        <h3 class="text-center">Reports</h3>
+        <div class="row mt-2 mb-2">
+            <div class="col">
+                <h4 class="text-center">Borrows by Date</h4>
+                <form method="post">
+                    <input type="hidden" id="request" name="request" value="borrowsByDate">
+                    <div class="form-row">
+                        <div class="col">
+                            <select id="date" name="date" class="form-control">
+                                {% for date in borrowDates %}
+                                    <option value="{{ date[0] }}">{{ date[0] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block">Generate Report</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col">
+                <h4 class="text-center">Returns by Date</h4>
+                <form method="post">
+                    <input type="hidden" id="request" name="request" value="returnsByDate">
+                    <div class="form-row">
+                        <div class="col">
+                            <select id="date" name="date" class="form-control">
+                                {% for date in returnDates %}
+                                    <option value="{{ date[0] }}">{{ date[0] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block">Generate Report</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col">
+                <h4 class="text-center">Borrows by Week</h4>
+                <form method="post">
+                    <input type="hidden" id="request" name="request" value="borrowsByWeek">
+                    <div class="form-row">
+                        <div class="col">
+                            <select id="week" name="week" class="form-control">
+                                {% for week in borrowWeeks %}
+                                    <option value="{{ week[0] }}">{{ week[0] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block">Generate Report</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col">
+                <h4 class="text-center">Returns by Week</h4>
+                <form method="post">
+                    <input type="hidden" id="request" name="request" value="returnsByWeek">
+                    <div class="form-row">
+                        <div class="col">
+                            <select id="week" name="week" class="form-control">
+                                {% for week in returnWeeks %}
+                                    <option value="{{ week[0] }}">{{ week[0] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block">Generate Report</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}

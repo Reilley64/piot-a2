@@ -15,7 +15,7 @@ class Database:
     def getAllBooks(self):
         cursor = self.connection.cursor()
         cursor.execute(
-            "SELECT book.*, bookBorrowed.status FROM book LEFT JOIN bookBorrowed ON bookBorrowed.bookID = book.bookID;")
+            "SELECT book.*, a.status FROM book LEFT JOIN bookBorrowed a ON a.bookBorrowedID = (SELECT b.bookBorrowedID FROM bookBorrowed AS b WHERE b.bookID = book.bookID ORDER BY b.borrowDate DESC LIMIT 1)")
         return cursor.fetchall()
 
     def addBook(self, title, author, publishedDate):
@@ -67,3 +67,53 @@ class Database:
                 counter["sunday"] += 1
 
         return counter
+
+    def getBorrowedDates(self):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT DISTINCT borrowDate FROM bookBorrowed ORDER BY borrowDate DESC;")
+        rows = cursor.fetchall()
+        return rows
+
+    def getReturnedDates(self):
+        cursor = self.connection.cursor()
+        cursor.execute(
+            "SELECT DISTINCT returnDate FROM bookBorrowed WHERE returnDate IS NOT NULL ORDER BY returnDate DESC;")
+        rows = cursor.fetchall()
+        return rows
+
+    def getBorrowsByDate(self, date):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM bookBorrowed WHERE borrowDate=%s;", (date,))
+        rows = cursor.fetchall()
+        return rows
+
+    def getReturnsByDate(self, date):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM bookBorrowed WHERE returnDate=%s;", (date,))
+        rows = cursor.fetchall()
+        return rows
+
+    def getBorrowedWeeks(self):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT DISTINCT YEARWEEK(borrowDate) FROM bookBorrowed ORDER BY YEARWEEK(borrowDate) DESC;")
+        rows = cursor.fetchall()
+        return rows
+
+    def getReturnedWeeks(self):
+        cursor = self.connection.cursor()
+        cursor.execute(
+            "SELECT DISTINCT YEARWEEK(returnDate) FROM bookBorrowed WHERE returnDate IS NOT NULL ORDER BY YEARWEEK(returnDate) DESC;")
+        rows = cursor.fetchall()
+        return rows
+
+    def getBorrowsByWeek(self, week):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM bookBorrowed WHERE YEARWEEK(borrowDate)=%s;", (week,))
+        rows = cursor.fetchall()
+        return rows
+
+    def getReturnsByWeek(self, week):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM bookBorrowed WHERE YEARWEEK(returnDate)=%s;", (week,))
+        rows = cursor.fetchall()
+        return rows
