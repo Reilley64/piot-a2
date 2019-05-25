@@ -1,0 +1,7 @@
+pocket.py
+============
+
+.. module:: pocket
+
+.. autoclass:: Pocket
+    :members:

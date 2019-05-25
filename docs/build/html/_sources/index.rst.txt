@@ -2,7 +2,7 @@ Welcome to Smart Library's documentation!
 ==========================================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 5
    :caption: Contents:
 
    main
@@ -11,7 +11,7 @@ Welcome to Smart Library's documentation!
    googlecalendar
    database
    request
-   socket
+   socketdoc
 
 Indices and tables
 ==================

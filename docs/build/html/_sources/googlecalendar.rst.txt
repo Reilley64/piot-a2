@@ -1,5 +1,5 @@
 googlecalendar.py
-==================
+=================
 
 .. module:: googlecalendar
 

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>googlecalendar.py &#8212; Smart Library 0.0.1 documentation</title>
+    <title>pocket.py &#8212; Smart Library 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -14,8 +14,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="database.py" href="database.html" />
-    <link rel="prev" title="functions.py" href="functions.html" />
+    <link rel="prev" title="request.py" href="request.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -32,22 +31,22 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-googlecalendar">
-<span id="googlecalendar-py"></span><h1>googlecalendar.py<a class="headerlink" href="#module-googlecalendar" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pocket">
+<span id="pocket-py"></span><h1>pocket.py<a class="headerlink" href="#module-pocket" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="googlecalendar.GoogleCalendar">
-<em class="property">class </em><code class="descclassname">googlecalendar.</code><code class="descname">GoogleCalendar</code><a class="headerlink" href="#googlecalendar.GoogleCalendar" title="Permalink to this definition">¶</a></dt>
-<dd><p>The GoogleCalendar class sets up the google calendar with borrow and return dates.</p>
+<dt id="pocket.Pocket">
+<em class="property">class </em><code class="descclassname">pocket.</code><code class="descname">Pocket</code><a class="headerlink" href="#pocket.Pocket" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Socket class connects with the host pi and sends request between eachother</p>
 <dl class="method">
-<dt id="googlecalendar.GoogleCalendar.borrow_book">
-<code class="descname">borrow_book</code><span class="sig-paren">(</span><em>date</em>, <em>summary</em>, <em>description</em>, <em>eventID</em><span class="sig-paren">)</span><a class="headerlink" href="#googlecalendar.GoogleCalendar.borrow_book" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets date on borrowing a book on the google calendar</p>
+<dt id="pocket.Pocket.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pocket.Pocket.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects the pi to the other pi</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="googlecalendar.GoogleCalendar.return_book">
-<code class="descname">return_book</code><span class="sig-paren">(</span><em>eventID</em><span class="sig-paren">)</span><a class="headerlink" href="#googlecalendar.GoogleCalendar.return_book" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets date on returning a book on the google calendar</p>
+<dt id="pocket.Pocket.sendRequest">
+<code class="descname">sendRequest</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#pocket.Pocket.sendRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a request for data to the other pi</p>
 </dd></dl>
 
 </dd></dl>
@@ -76,18 +75,17 @@
 <li class="toctree-l1"><a class="reference internal" href="main.html">main.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dbconnection.html">dbconnection.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="functions.html">functions.py</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">googlecalendar.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="googlecalendar.html">googlecalendar.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">database.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="request.html">request.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="socketdoc.html">socketdoc.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pocket.py</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="functions.html" title="previous chapter">functions.py</a></li>
-      <li>Next: <a href="database.html" title="next chapter">database.py</a></li>
+      <li>Previous: <a href="request.html" title="previous chapter">request.py</a></li>
   </ul></li>
 </ul>
 </div>
@@ -121,7 +119,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/googlecalendar.rst.txt"
+      <a href="_sources/pocket.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

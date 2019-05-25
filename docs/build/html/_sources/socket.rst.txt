@@ -1,0 +1,7 @@
+socket.py
+============
+
+.. module:: socket
+
+.. autoclass:: Socket
+    :members:
