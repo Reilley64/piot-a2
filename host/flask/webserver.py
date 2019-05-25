@@ -69,15 +69,18 @@ def logout():
 
 
 def averageBorrowDayGraph(bookID):
+    global database
 
-
+    counter = database.getBookAverageBorrowData(bookID)
     data = [
         go.Bar(
-            x=["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            y=[1, 2, 3, 4, 5]
+            x=["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            y=[counter["monday"], counter["tuesday"], counter["wednesday"], counter["thursday"], counter["friday"],
+               counter["saturday"], counter["sunday"]]
         )
     ]
     return json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
 
 @app.route("/book/<bookID>")
 def book(bookID):

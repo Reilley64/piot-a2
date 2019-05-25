@@ -51,19 +51,19 @@ class Database:
         counter = Counter()
 
         for row in rows:
-            if datetime.strptime(rows[0], "%Y-%M-%D").weekday() == 0:
+            if row[0].weekday() == 0:
                 counter["monday"] += 1
-            elif datetime.strptime(rows[0], "%Y-%M-%D").weekday() == 1:
+            elif row[0].weekday() == 1:
                 counter["tuesday"] += 1
-            elif datetime.strptime(rows[0], "%Y-%M-%D").weekday() == 2:
+            elif row[0].weekday() == 2:
                 counter["wednesday"] += 1
-            elif datetime.strptime(rows[0], "%Y-%M-%D").weekday() == 3:
+            elif row[0].weekday() == 3:
                 counter["thursday"] += 1
-            elif datetime.strptime(rows[0], "%Y-%M-%D").weekday() == 4:
+            elif row[0].weekday() == 4:
                 counter["friday"] += 1
-            elif datetime.strptime(rows[0], "%Y-%M-%D").weekday() == 5:
+            elif row[0].weekday() == 5:
                 counter["saturday"] += 1
-            elif datetime.strptime(rows[0], "%Y-%M-%D").weekday() == 6:
+            elif row[0].weekday() == 6:
                 counter["sunday"] += 1
 
         return counter
