@@ -1,5 +1,5 @@
 Welcome to Smart Library's documentation!
-=========================================
+==========================================
 
 .. toctree::
    :maxdepth: 4
@@ -9,9 +9,9 @@ Welcome to Smart Library's documentation!
    dbconnection
    functions
    googlecalendar
+   database
    request
    socket
-   database
 
 Indices and tables
 ==================

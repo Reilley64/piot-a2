@@ -1,4 +1,5 @@
 class Request:
+    """The request class requests all the library features form the database such as borrow, search, return and user credentials"""
     request = None
     bookID = None
     column = None
@@ -7,19 +8,23 @@ class Request:
     username = None
 
     def bookBorrow(self, bookID):
+        """Borrow book function with request for bookID"""
         self.request = "borrow"
         self.bookID = bookID
 
     def bookReturn(self, bookID):
+        """Return book function with request for bookID"""
         self.request = "return"
         self.bookID = bookID
 
     def bookSearch(self, column, query):
+        """Search book function with request for column and query"""
         self.request = "search"
         self.column = column
         self.query = query
 
     def credentials(self, username, name):
+        """Request for user credentials including Username and name"""
         self.request = "credentials"
         self.username = username
         self.name = name
