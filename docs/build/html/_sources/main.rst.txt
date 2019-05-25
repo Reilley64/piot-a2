@@ -1,5 +1,5 @@
 main.py docs
-=========
+============
 
 .. module:: main
 

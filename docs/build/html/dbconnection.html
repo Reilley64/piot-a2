@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>main.py docs &#8212; Smart Library 0.0.1 documentation</title>
+    <title>dbconnection.py docs &#8212; Smart Library 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -14,8 +14,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="dbconnection.py docs" href="dbconnection.html" />
-    <link rel="prev" title="Welcome to Smart Library’s documentation!" href="index.html" />
+    <link rel="prev" title="main.py docs" href="main.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -32,34 +31,22 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-main">
-<span id="main-py-docs"></span><h1>main.py docs<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-dbconnection">
+<span id="dbconnection-py-docs"></span><h1>dbconnection.py docs<a class="headerlink" href="#module-dbconnection" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="main.Main">
-<em class="property">class </em><code class="descclassname">main.</code><code class="descname">Main</code><a class="headerlink" href="#main.Main" title="Permalink to this definition">¶</a></dt>
-<dd><p>The Main class initiates the user and listens for data from the client pi</p>
-<dl class="attribute">
-<dt id="main.Main.ADDRESS">
-<code class="descname">ADDRESS</code><em class="property"> = None</em><a class="headerlink" href="#main.Main.ADDRESS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Identifies Host name and port to use</p>
+<dt id="dbconnection.dbconnection">
+<em class="property">class </em><code class="descclassname">dbconnection.</code><code class="descname">dbconnection</code><a class="headerlink" href="#dbconnection.dbconnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Main class initiates and connects the sql library, and establishes a cloud db connection</p>
+<dl class="method">
+<dt id="dbconnection.dbconnection.cloudConnection">
+<code class="descname">cloudConnection</code><span class="sig-paren">(</span><em>method</em>, <em>sql</em><span class="sig-paren">)</span><a class="headerlink" href="#dbconnection.dbconnection.cloudConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to the cloud database. If Get then fetch all results. If POST then send all results.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="main.Main.listener">
-<code class="descname">listener</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Main.listener" title="Permalink to this definition">¶</a></dt>
-<dd><p>Listens for data sent through sockets from the client pi</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="main.Main.name">
-<code class="descname">name</code><em class="property"> = None</em><a class="headerlink" href="#main.Main.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Identifies Users Name</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="main.Main.user">
-<code class="descname">user</code><em class="property"> = None</em><a class="headerlink" href="#main.Main.user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Identifies User</p>
+<dt id="dbconnection.dbconnection.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbconnection.dbconnection.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to the sql database.</p>
 </dd></dl>
 
 </dd></dl>
@@ -85,16 +72,15 @@
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">main.py docs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dbconnection.html">dbconnection.py docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">main.py docs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dbconnection.py docs</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Smart Library’s documentation!</a></li>
-      <li>Next: <a href="dbconnection.html" title="next chapter">dbconnection.py docs</a></li>
+      <li>Previous: <a href="main.html" title="previous chapter">main.py docs</a></li>
   </ul></li>
 </ul>
 </div>
@@ -128,7 +114,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/main.rst.txt"
+      <a href="_sources/dbconnection.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
