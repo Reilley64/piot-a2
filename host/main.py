@@ -4,22 +4,8 @@ import functions as Functions
 import googlecalendar as Calendar
 import datetime
 
-"""
-main.py
-=================================================
-The core module of the host folder of the project
-"""
-
 class Main():
-    """An example docstring for a class definition."""
     def __init__(self):
-        """
-    Return the most important thing about a person.
-    Parameters
-    ----------
-    your_name
-        A string indicating the name of the person.
-    """
         self.HOST = ""
         self.PORT = 65000 
         self.ADDRESS = (self.HOST, self.PORT)
@@ -28,13 +14,6 @@ class Main():
         self.response = ""
 
     def listener(self):
-        """
-        Blah blah blah.
-        Parameters
-        ---------
-        name
-            A string to assign to the `name` instance attribute.
-        """
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind(self.ADDRESS)
             s.listen()
