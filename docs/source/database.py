@@ -1,4 +1,5 @@
 class Database:
+    """The database class initialises the sql database, creates a user, gets the username, name and logs in an existing user"""
     def __init__(self):
         try:
             self.connection = sqlite3.connect("database/sqlite.db")
@@ -7,6 +8,7 @@ class Database:
             logging.warning(e)
 
     def createUser(self, username, password, firstName, lastName, email):
+        """Registers a user using a username, password, firstName, lastName and email and inserts the user into the database"""
         passwordHash = pbkdf2_sha256.hash(password)
 
         try:
@@ -20,6 +22,7 @@ class Database:
         return True
 
     def getName(self, username):
+        """Gets the user from the database for the login"""
         try:
             cursor = self.connection.cursor()
             cursor.execute("SELECT firstName FROM users WHERE username=?;", (username,))
@@ -30,6 +33,7 @@ class Database:
         return rows[0]
 
     def login(self, username, password):
+        """Logs in the user using a username and password"""
         try:
             cursor = self.connection.cursor()
             cursor.execute("SELECT username, password FROM users WHERE username=?;", (username,))

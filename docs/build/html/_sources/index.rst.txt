@@ -9,6 +9,9 @@ Welcome to Smart Library's documentation!
    dbconnection
    functions
    googlecalendar
+   request
+   socket
+   database
 
 Indices and tables
 ==================

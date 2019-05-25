@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Python Module Index &#8212; Smart Library 0.0.1 documentation</title>
+    <title>database.py &#8212; Smart Library 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -14,18 +14,12 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-
+    <link rel="prev" title="googlecalendar.py" href="googlecalendar.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-
-    <script type="text/javascript">
-      DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true;
-    </script>
-
 
   </head><body>
   
@@ -37,55 +31,33 @@
 
           <div class="body" role="main">
             
+  <div class="section" id="module-database">
+<span id="database-py"></span><h1>database.py<a class="headerlink" href="#module-database" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="database.Database">
+<em class="property">class </em><code class="descclassname">database.</code><code class="descname">Database</code><a class="headerlink" href="#database.Database" title="Permalink to this definition">¶</a></dt>
+<dd><p>The database class initialises the sql database, creates a user, gets the username, name and logs in an existing user</p>
+<dl class="method">
+<dt id="database.Database.createUser">
+<code class="descname">createUser</code><span class="sig-paren">(</span><em>username</em>, <em>password</em>, <em>firstName</em>, <em>lastName</em>, <em>email</em><span class="sig-paren">)</span><a class="headerlink" href="#database.Database.createUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a user using a username, password, firstName, lastName and email and inserts the user into the database</p>
+</dd></dl>
 
-   <h1>Python Module Index</h1>
+<dl class="method">
+<dt id="database.Database.getName">
+<code class="descname">getName</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="headerlink" href="#database.Database.getName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the user from the database for the login</p>
+</dd></dl>
 
-   <div class="modindex-jumpbox">
-   <a href="#cap-d"><strong>d</strong></a> | 
-   <a href="#cap-f"><strong>f</strong></a> | 
-   <a href="#cap-g"><strong>g</strong></a> | 
-   <a href="#cap-m"><strong>m</strong></a>
-   </div>
+<dl class="method">
+<dt id="database.Database.login">
+<code class="descname">login</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#database.Database.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs in the user using a username and password</p>
+</dd></dl>
 
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-d"><td></td><td>
-       <strong>d</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="database.html#module-database"><code class="xref">database</code></a></td><td>
-       <em></em></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="dbconnection.html#module-dbconnection"><code class="xref">dbconnection</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-f"><td></td><td>
-       <strong>f</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="functions.html#module-functions"><code class="xref">functions</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-g"><td></td><td>
-       <strong>g</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="googlecalendar.html#module-googlecalendar"><code class="xref">googlecalendar</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-m"><td></td><td>
-       <strong>m</strong></td><td></td></tr>
-     <tr>
-       <td></td>
-       <td>
-       <a href="main.html#module-main"><code class="xref">main</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+</dd></dl>
+
+</div>
 
 
           </div>
@@ -105,18 +77,19 @@
 
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="main.html">main.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dbconnection.html">dbconnection.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="functions.html">functions.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="googlecalendar.html">googlecalendar.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="database.html">database.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">database.py</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="googlecalendar.html" title="previous chapter">googlecalendar.py</a></li>
   </ul></li>
 </ul>
 </div>
@@ -149,6 +122,9 @@
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
+      |
+      <a href="_sources/database.rst.txt"
+          rel="nofollow">Page source</a>
     </div>
 
     
