@@ -20,12 +20,12 @@
             <div class="col">
                 <h4 class="text-center">Borrows by Date</h4>
                 <form method="post">
-                    <input type="hidden" id="request" name="request" value="borrowsByDate">
+                    <input type="hidden" id="type" name="type" value="borrowsByDate">
                     <div class="form-row">
                         <div class="col">
                             <select id="date" name="date" class="form-control">
-                                {% for date in borrowDates %}
-                                    <option value="{{ date[0] }}">{{ date[0] }}</option>
+                                {% for date in borrow_dates|sort %}
+                                    <option value="{{ date|replace(" 00:00:00+00:00", "") }}">{{ date|replace(" 00:00:00+00:00", "") }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -40,52 +40,12 @@
             <div class="col">
                 <h4 class="text-center">Returns by Date</h4>
                 <form method="post">
-                    <input type="hidden" id="request" name="request" value="returnsByDate">
+                    <input type="hidden" id="type" name="type" value="returnsByDate">
                     <div class="form-row">
                         <div class="col">
                             <select id="date" name="date" class="form-control">
-                                {% for date in returnDates %}
-                                    <option value="{{ date[0] }}">{{ date[0] }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary btn-block">Generate Report</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="row mt-2 mb-2">
-            <div class="col">
-                <h4 class="text-center">Borrows by Week</h4>
-                <form method="post">
-                    <input type="hidden" id="request" name="request" value="borrowsByWeek">
-                    <div class="form-row">
-                        <div class="col">
-                            <select id="week" name="week" class="form-control">
-                                {% for week in borrowWeeks %}
-                                    <option value="{{ week[0] }}">{{ week[0] }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary btn-block">Generate Report</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="row mt-2 mb-2">
-            <div class="col">
-                <h4 class="text-center">Returns by Week</h4>
-                <form method="post">
-                    <input type="hidden" id="request" name="request" value="returnsByWeek">
-                    <div class="form-row">
-                        <div class="col">
-                            <select id="week" name="week" class="form-control">
-                                {% for week in returnWeeks %}
-                                    <option value="{{ week[0] }}">{{ week[0] }}</option>
+                                {% for date in return_dates|sort %}
+                                    <option value="{{ date|replace(" 00:00:00+00:00", "") }}">{{ date|replace(" 00:00:00+00:00", "") }}</option>
                                 {% endfor %}
                             </select>
                         </div>
