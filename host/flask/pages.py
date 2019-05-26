@@ -8,7 +8,9 @@ from flask import Blueprint, render_template, url_for, request, redirect, send_f
 site = Blueprint("site", __name__)
 username = None
 
+#Allows admins with a web interface to delete, add and print reports.
 
+#Route to load Admin suite
 @site.route("/", methods=["GET"])
 def index():
     if username is None:
@@ -18,12 +20,12 @@ def index():
         data = json.loads(response.text)
         return render_template("index.html", books=data)
 
-
+#Route to render Login page
 @site.route("/login", methods=["GET"])
 def login():
     return render_template("login.html")
 
-
+#Route to send login request
 @site.route("/login", methods=["POST"])
 def doLogin():
     global username
@@ -34,7 +36,7 @@ def doLogin():
     else:
         return redirect(url_for("site.login"))
 
-
+#Route to logout of web interface
 @site.route("/logout")
 def logout():
     global username
@@ -42,7 +44,7 @@ def logout():
     username = None
     return redirect(url_for("site.login"))
 
-
+#Route to get book object
 @site.route("/", methods=["POST"])
 def addBook():
     if request.form["type"] == "add":
@@ -60,7 +62,7 @@ def addBook():
 
     return redirect(url_for("site.index"))
 
-
+#Route for Admin to get reports
 @site.route("/reports", methods=["GET"])
 def reports():
     if username is None:
@@ -77,7 +79,7 @@ def reports():
                 return_dates.append(parser.parse(borrow["return_date"]))
         return render_template("report.html", borrow_dates=borrow_dates, return_dates=return_dates)
 
-
+#Route for Admin to download report
 @site.route("/reports", methods=["POST"])
 def downloadReport():
     if request.form["type"] == "borrowsByDate":

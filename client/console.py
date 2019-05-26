@@ -4,6 +4,7 @@ from classlib.database import Database
 from classlib.request import Request
 from classlib.socket import Socket
 from tabulate import tabulate
+from opencv.recognise import Recognise
 import textwrap
 
 
@@ -46,8 +47,18 @@ def main():
                 print(username + " is already logged in \n")
 
         elif userInput[0] == "face":
-            if len(userInput) > 1:
-                print("Too many arguments for command logout; example \"face\"\n")
+            if len(userInput) != 2:
+                print("Command face takes 2 arguments; example \"face {username}\"\n")
+            elif username is None:
+                print(userInput[1])
+                result = Recognise().run(userInput[1])
+                if not result:
+                    print("Failed to verify you please try again\n")
+                else:
+                    username = result
+                    print("Welcome " + str(username) + "\n")
+            else:
+                print(username + " is already logged in\n")
 
         elif userInput[0] == "logout":
             # Logout UI
