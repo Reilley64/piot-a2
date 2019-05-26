@@ -26,6 +26,8 @@ pip3 install sqlite3
 pip3 install tabulate
 pip3 install passlib
 
+To install face recognition, please refer to installation.txt in client directory
+
 Host Installation:
 pip3 install google-api-python-client 
 pip3 install google-auth-httplib2 
