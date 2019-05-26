@@ -16,12 +16,14 @@ import imutils
 import pickle
 import time
 import cv2
+import sys
+import os
 
 class Recognise:
     def __init__(self):  
         # construct the argument parser and parse the arguments
         ap = argparse.ArgumentParser()
-        ap.add_argument("-e", "--encodings", default="encodings.pickle",
+        ap.add_argument("-e", "--encodings", default="./opencv/encodings.pickle",
             help="path to serialized db of facial encodings")
         ap.add_argument("-r", "--resolution", type=int, default=240,
             help="Resolution of the video feed")
@@ -32,6 +34,7 @@ class Recognise:
     def run(self, username):
         # load the known faces and embeddings
         print("[INFO] loading encodings...")
+        print(os.getcwd())
         data = pickle.loads(open(self.args["encodings"], "rb").read())
 
         # initialize the video stream and then allow the camera sensor to warm up
@@ -90,14 +93,13 @@ class Recognise:
                 # print to console, identified person
                 print("Person found: {}".format(name))
                 if(name == username):
-                    return True
+                    vs.stop()
+                    return name
                 elif(name == 'Unknown'):
+                    vs.stop()
                     return False
                 # Set a flag to sleep the cam for fixed time
                 time.sleep(3.0)
-
-        # do a bit of cleanup
-        vs.stop()
 
 ##if __name__ == "__main__":
 ##    Recognise().run("S3661545")

@@ -51,7 +51,7 @@ def main():
                 print("Command face takes 2 arguments; example \"face {username}\"\n")
             elif username is None:
                 print(userInput[1])
-                result = Recognise.run(userInput[1])
+                result = Recognise().run(userInput[1])
                 if not result:
                     print("Failed to verify you please try again\n")
                 else:
