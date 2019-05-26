@@ -8,7 +8,9 @@ from flask import Blueprint, render_template, url_for, request, redirect, send_f
 site = Blueprint("site", __name__)
 username = None
 
+#Allows admins with a web interface to delete, add and print reports.
 
+#Route to load Admin suite
 @site.route("/", methods=["GET"])
 def index():
     if username is None:
