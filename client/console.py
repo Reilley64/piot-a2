@@ -4,15 +4,17 @@ from classlib.database import Database
 from classlib.request import Request
 from classlib.socket import Socket
 from tabulate import tabulate
+import textwrap
 
-#Console User Interface
 
+# Console User Interface
 def printSearchResponse(response):
-    #Receives response from host pi and prints in console as a table of book details
-    #Clears console before printing the table
+    # Receives response from host pi and prints in console as a table of book details
+    # Clears console before printing the table
     responseTable = []
     for book in response:
-        responseTable.append([book["bookID"], book["title"], book["author"], book["publishedDate"], book["status"]])
+        title = textwrap.shorten(book["title"], width=30)
+        responseTable.append([book["bookID"], title, book["author"], book["publishedDate"], book["status"]])
 
     os.system("clear")
     print(tabulate(responseTable, headers=["ID", "Title", "Author", "Published", "Status"]) + "\n")
@@ -25,12 +27,12 @@ def main():
 
     while True:
         print("login | face | logout | signup | connect | exit | help")
-        #User Interface home screen
+        # User Interface home screen
         userInput = input("")
         userInput = userInput.split()
 
         if userInput[0] == "login":
-            #Login UI
+            # Login UI
             if len(userInput) is not 3:
                 print("Command login takes 2 arguments; example \"login {username} {password}\"\n")
             elif username is None:
@@ -48,7 +50,7 @@ def main():
                 print("Too many arguments for command logout; example \"face\"\n")
 
         elif userInput[0] == "logout":
-            #Logout UI
+            # Logout UI
             if len(userInput) > 1:
                 print("Too many arguments for command logout; example \"logout\"\n")
             elif username is not None:
@@ -58,7 +60,7 @@ def main():
                 print("No one to logout \n")
 
         elif userInput[0] == "signup":
-            #Signup UI
+            # Signup UI
             if len(userInput) is not 6:
                 print("Command signup takes 5 arguments; example \"signup {username} {password} {first name} {last "
                       "name} {email}\"\n")
@@ -83,7 +85,7 @@ def main():
 
                 if response:
                     while True:
-                        #Logged in UI
+                        # Logged in UI
                         print(30 * "-", "MENU", 30 * "-")
                         print("1. Search Book Catalogue")
                         print("2. Borrow")
@@ -94,7 +96,7 @@ def main():
                         userInput = input("")
 
                         if userInput == "1":
-                            #Book search UI
+                            # Book search UI
                             print(30 * "-", "SEARCH", 30 * "-")
                             print("1. Title")
                             print("2. Author")
@@ -103,7 +105,7 @@ def main():
                             print(68 * "-")
 
                             userInput = input("")
-                            #Search by Title, Author or Date
+                            # Search by Title, Author or Date
 
                             if userInput == "1":
                                 userInput = input("Insert title: ")
@@ -148,7 +150,7 @@ def main():
                                 continue
 
                         elif userInput == "2":
-                            #Borrow book UI
+                            # Borrow book UI
                             userInput = input("Insert id: ")
 
                             sendable = Request()
@@ -161,7 +163,7 @@ def main():
                                 print("Book borrowed\n")
 
                         elif userInput == "3":
-                            #Returning book UI
+                            # Returning book UI
                             userInput = input("Insert id: ")
 
                             sendable = Request()

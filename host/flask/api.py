@@ -131,6 +131,16 @@ def getBorrows():
     return jsonify([borrow.serialize() for borrow in borrows])
 
 
+@api.route("/api/borrow", methods=["POST"])
+def addBorrow():
+    user_id = request.json["user_id"]
+    book_id = request.json["book_id"]
+    borrow = Borrow(user_id, book_id)
+    db.session.add(borrow)
+    db.session.commit()
+    return jsonify(borrow.serialize())
+
+
 @api.route("/api/borrow/borrow_date/<date>", methods=["GET"])
 def getBorrowsByBorrowDate(date):
     borrows = Borrow.query.filter_by(borrow_date=date)
