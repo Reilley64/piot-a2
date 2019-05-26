@@ -20,12 +20,12 @@ def index():
         data = json.loads(response.text)
         return render_template("index.html", books=data)
 
-
+#Route to render Login page
 @site.route("/login", methods=["GET"])
 def login():
     return render_template("login.html")
 
-
+#Route to send login request
 @site.route("/login", methods=["POST"])
 def doLogin():
     global username
@@ -36,7 +36,7 @@ def doLogin():
     else:
         return redirect(url_for("site.login"))
 
-
+#Route to logout of web interface
 @site.route("/logout")
 def logout():
     global username
@@ -44,7 +44,7 @@ def logout():
     username = None
     return redirect(url_for("site.login"))
 
-
+#Route to get book object
 @site.route("/", methods=["POST"])
 def addBook():
     if request.form["type"] == "add":
@@ -62,7 +62,7 @@ def addBook():
 
     return redirect(url_for("site.index"))
 
-
+#Route 
 @site.route("/reports", methods=["GET"])
 def reports():
     if username is None:
