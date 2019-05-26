@@ -67,13 +67,16 @@ class Borrow(db.Model):
             "return_date": self.return_date,
         }
 
+#API with Flask this is used to talk to Google Cloud database 
 
+
+#Route to get json object of all book
 @api.route("/api/book", methods=["GET"])
 def getBooks():
     books = Book.query.all()
     return jsonify([book.serialize() for book in books])
 
-
+#Route to add json object for a book
 @api.route("/api/book", methods=["POST"])
 def addBook():
     title = request.json["title"]
@@ -84,13 +87,13 @@ def addBook():
     db.session.commit()
     return jsonify(book.serialize())
 
-
+#Route for that specific book object
 @api.route("/api/book/<id>", methods=["GET"])
 def getBook(id):
     book = Book.query.get(id)
     return jsonify(book.serialize())
 
-
+#Route to delete book from the database
 @api.route("/api/book/<id>", methods=["DELETE"])
 def deleteBook(id):
     response = requests.get("http://127.0.0.1:5000/api/borrow/book_id/" + id)
@@ -112,41 +115,31 @@ def deleteBook(id):
         db.session.commit()
         return jsonify(book.serialize())
 
-
+#Route to get specific user id
 @api.route("/api/user/<id>", methods=["GET"])
 def getUser(id):
     user = User.query.get(id)
     return jsonify(user.serialize())
 
-
+#Route to borrow book by its ID
 @api.route("/api/borrow/book_id/<book_id>", methods=["GET"])
 def getBorrowsByBookID(book_id):
     borrows = Borrow.query.filter_by(book_id=book_id)
     return jsonify([borrow.serialize() for borrow in borrows])
 
-
+#Route to find borrowed books
 @api.route("/api/borrow", methods=["GET"])
 def getBorrows():
     borrows = Borrow.query.all()
     return jsonify([borrow.serialize() for borrow in borrows])
 
-
-@api.route("/api/borrow", methods=["POST"])
-def addBorrow():
-    user_id = request.json["user_id"]
-    book_id = request.json["book_id"]
-    borrow = Borrow(user_id, book_id)
-    db.session.add(borrow)
-    db.session.commit()
-    return jsonify(borrow.serialize())
-
-
+#Route to find borrowed books by date borrowed
 @api.route("/api/borrow/borrow_date/<date>", methods=["GET"])
 def getBorrowsByBorrowDate(date):
     borrows = Borrow.query.filter_by(borrow_date=date)
     return jsonify([borrow.serialize() for borrow in borrows])
 
-
+#Route to find borrowed books filtered by their return date
 @api.route("/api/borrow/return_date/<date>", methods=["GET"])
 def getBorrowsByReturnDate(date):
     borrows = Borrow.query.filter_by(return_date=date)
