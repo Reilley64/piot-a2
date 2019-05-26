@@ -3,20 +3,22 @@ import json
 
 
 class Socket:
-    #Socketing between client and host pi's
+    """Socket class to handle opening of sockets between the host and client pis"""
     def __init__(self):
-        #Initialize socket
+        """Sets up the sockets parameters"""
         self.address = ("101.116.1.55", 65000)
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def connect(self):
+        """Connects to the socket outlined in parameters"""
         self.s.connect(self.address)
 
     def sendRequest(self, request):
+        """Sends a request to the host pi"""
         self.s.sendall(request.encode())
 
         while True:
-            #If statements for decoding
+            """Statements for decoding the response"""
             data = self.s.recv(4096)
             if data:
                 decode = data.decode()

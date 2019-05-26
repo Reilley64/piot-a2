@@ -70,4 +70,11 @@ class Main():
         print("Done.")
 
 if __name__ == '__main__':
-    Main().listener()    
+    while True:
+        try:
+            Main().listener()  
+        except:
+            pass
+        else:
+            break
+      
