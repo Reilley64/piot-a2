@@ -8,7 +8,20 @@ class Database:
             logging.warning(e)
 
     def createUser(self, username, password, firstName, lastName, email):
-        """Registers a user using a username, password, firstName, lastName and email and inserts the user into the database"""
+        """Registers a user using a username, password, firstName, lastName and email and inserts the user into the database
+        
+        :param self: for connection to sql database connection
+        
+        :param username: Registered users user name
+
+        :param password: Password entered and hashed
+
+        :param firstName: First name of registered user
+
+        :param lastName: Last name of registered user
+
+        :param email: Email of registered user
+        """
         passwordHash = pbkdf2_sha256.hash(password)
 
         try:
