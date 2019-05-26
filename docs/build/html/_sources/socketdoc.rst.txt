@@ -1,5 +1,5 @@
 socketdoc.py
-=============
+============
 
 .. module:: socketdoc
 

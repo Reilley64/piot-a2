@@ -14,6 +14,7 @@ Welcome to Smart Library's documentation!
    socketdoc
    api
    webserver
+   recognise
 
 Indices and tables
 ==================
