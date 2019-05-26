@@ -1,5 +1,5 @@
 class dbconnection:
-    """The dbconnection class initiates and connects the sql library, and establishes a cloud db connection"""
+    """This is the dbconnection class for the cloud connection."""
     def __init__(self):
         self.pymysql = pymysql
 
@@ -13,7 +13,14 @@ class dbconnection:
             cursorclass=pymysql.cursors.DictCursor)
 
     def cloudConnection(self, method, sql):
-        """Connect to the cloud database. If Get then fetch all results. If POST then send all results."""
+        """Connect to the cloud database. If Get then fetch all results. If POST then send all results.
+
+        :param self: Initiates the pymysql
+        
+        :param method: Used for POST AND GET of sql fetches and commits
+
+        :param sql: sql database connection
+        """
         connection = self.connect()
         if('GET' == method):
             

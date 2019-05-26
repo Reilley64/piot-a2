@@ -1,4 +1,4 @@
-class DatabaseFlask:
+class api:
     """The database class initialises and connects to the sql database, grabs all books, adds and delete books for the flask website"""
     def __init__(self):
         self.connection = mysql.connector.connect(

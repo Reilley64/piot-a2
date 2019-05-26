@@ -12,7 +12,7 @@ Welcome to Smart Library's documentation!
    database
    request
    socketdoc
-   databaseflask
+   api
    webserver
 
 Indices and tables

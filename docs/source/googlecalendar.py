@@ -20,7 +20,18 @@ class GoogleCalendar():
    
    
     def borrow_book(self, date, summary, description, eventID):
-        """Sets date on borrowing a book on the google calendar"""
+        """Sets date on borrowing a book on the google calendar
+        
+        :param self: Initiates the self service events
+        
+        :param date: date grabbing for book borrowing on calendar event
+
+        :param summary: Result of book borrowed in event (Returned/Borrowed)
+
+        :param description: Event description
+
+        :param eventID: sets Event ID on borrowed book in calendar
+        """
         event = {
         'id':'',
         'summary': 'Returned',

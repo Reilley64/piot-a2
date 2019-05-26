@@ -37,11 +37,20 @@
 <dl class="class">
 <dt id="dbconnection.dbconnection">
 <em class="property">class </em><code class="descclassname">dbconnection.</code><code class="descname">dbconnection</code><a class="headerlink" href="#dbconnection.dbconnection" title="Permalink to this definition">¶</a></dt>
-<dd><p>The dbconnection class initiates and connects the sql library, and establishes a cloud db connection</p>
+<dd><p>This is the dbconnection class for the cloud connection.</p>
 <dl class="method">
 <dt id="dbconnection.dbconnection.cloudConnection">
 <code class="descname">cloudConnection</code><span class="sig-paren">(</span><em>method</em>, <em>sql</em><span class="sig-paren">)</span><a class="headerlink" href="#dbconnection.dbconnection.cloudConnection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect to the cloud database. If Get then fetch all results. If POST then send all results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – Initiates the pymysql</p></li>
+<li><p><strong>method</strong> – Used for POST AND GET of sql fetches and commits</p></li>
+<li><p><strong>sql</strong> – sql database connection</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -80,7 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="database.html">database.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="request.html">request.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="socketdoc.html">socketdoc.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="databaseflask.html">databaseflask.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">api.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="webserver.html">webserver.py</a></li>
 </ul>
 
