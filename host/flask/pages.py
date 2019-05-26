@@ -62,7 +62,7 @@ def addBook():
 
     return redirect(url_for("site.index"))
 
-#Route 
+#Route for Admin to get reports
 @site.route("/reports", methods=["GET"])
 def reports():
     if username is None:
@@ -79,7 +79,7 @@ def reports():
                 return_dates.append(parser.parse(borrow["return_date"]))
         return render_template("report.html", borrow_dates=borrow_dates, return_dates=return_dates)
 
-
+#Route for Admin to download report
 @site.route("/reports", methods=["POST"])
 def downloadReport():
     if request.form["type"] == "borrowsByDate":
