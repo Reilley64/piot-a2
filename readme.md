@@ -16,23 +16,24 @@ Smart Library is a smart office web IOT application.<br>Features Include:<br>
 ```bash
 Python3.5 or higher and a Raspberry Pi model 3B/B+ with Raspbian.
 
+Host Installation:
+pip3 install pymysql
+pip3 install google-api-python-client 
+pip3 install google-auth-httplib2 
+pip3 install google-auth-oauthlib
+
 Flask Installation:
-pip3 install mysql-connector
 pip3 install flask
-pip3 install plotly
+pip3 install flask-sqlalchemy
+pip3 install dateutil
+pip3 install flask-bootstrap4
 
 Client Installation:
 pip3 install sqlite3
 pip3 install tabulate
 pip3 install passlib
 
-To install face recognition, please refer to installation.txt in client directory
-
-Host Installation:
-pip3 install google-api-python-client 
-pip3 install google-auth-httplib2 
-pip3 install google-auth-oauthlib
-pip3 install PyMySQL
+For face recognition, please refer to installation.txt in client directory
 
 Docs Installation: 
 pip3 install sphinx
